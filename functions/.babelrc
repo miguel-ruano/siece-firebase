@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "6.14"
+      }
+    }]
+  ],
+  "plugins": [
+//    "transform-es2017-object-entries",
+//    "transform-runtime"
+    ["transform-runtime", {"polyfill": false, "regenerator": true}]
+//    "transform-es2017-object-entries"
+//    "transform-object-rest-spread"
+  ]
+}
