@@ -1,3 +1,6 @@
+# SDK
+functions/siece-app-firebase-adminsdk-6k80h-781dba19c4.json
+
 .firebase/
 
 # IDE
@@ -64,4 +67,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
