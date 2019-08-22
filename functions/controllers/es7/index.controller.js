@@ -24,6 +24,7 @@ exports.getIndex = async (req, res) => {
     } else {
       console.log('Documents found.');
       let reports = querySnapshot.docs.map(doc => doc.data());
+      // console.log("reports");
       // console.log(reports);
       topStatistics(reports, data);
       await investmentByCountry(reports, data);
@@ -53,19 +54,30 @@ exports.getIndex = async (req, res) => {
 
 const topStatistics = (reports, data) => {
   data.forms = reports.length;
-  console.log(reports);
   let totalBeneficiaries = 0;
   let totalFemale = 0;
   let totalMale = 0;
   let totalInvestment = 0;
   for (let i = 0; i < reports.length; i++) {
+    // console.log("reports[i].programs");
+    // console.log(reports[i].programs);
     if (reports[i].programs) {
       for (let j = 0; j < reports[i].programs.length; j++) {
-        totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
-        totalInvestment += Number(reports[i].programs[j].investment);
+        // console.log(reports[i].programs[j].beneficiaries)
+        if (reports[i].programs[j].beneficiaries){
+          totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
+        }
+        if (reports[i].programs[j].investment){
+          totalInvestment += Number(reports[i].programs[j].investment);
+        }
       }
-      totalFemale += Number(reports[i].female_students);
-      totalMale += Number(reports[i].male_students);
+
+      if (reports[i].female_students){
+        totalFemale += Number(reports[i].female_students);
+      }
+      if (reports[i].male_students){
+        totalMale += Number(reports[i].male_students);
+      }
     }
   }
   data.total_beneficiaries = totalBeneficiaries;
@@ -89,6 +101,8 @@ const investmentByCountry = async (reports, data) => {
   for (let i = 0; i < reports.length; i++) {
     if (reports[i].programs) {
       const institutionCountry = await getInstitutionCountry(reports[i]);
+      // console.log("institutionCountry")
+      // console.log(institutionCountry)
       let investment = investments.find((item) => item.country_code === institutionCountry);
       if (!investment) {
         investment = {
@@ -99,7 +113,9 @@ const investmentByCountry = async (reports, data) => {
         investments.push(investment);
       }
       for (let j = 0; j < reports[i].programs.length; j++) {
-        investment.amount += Number(reports[i].programs[j].investment);
+        if (reports[i].programs[j].investment){
+          investment.amount += Number(reports[i].programs[j].investment);
+        }
       }
     }
   }
@@ -109,6 +125,8 @@ const investmentByCountry = async (reports, data) => {
     return 1;
   });
   data.investment_by_country = investments.slice(0, 15);
+  // console.log("data.investment_by_country")
+  // console.log(data.investment_by_country)
 };
 
 const investmentByInstitution = async (reports, data, res) => {
