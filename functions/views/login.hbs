@@ -122,6 +122,18 @@
 
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
+        txtEmail.addEventListener("keyup", function(e) {
+          if(e.which === 13)
+            btnLogin.click();
+
+        });
+
+        txtPassword.addEventListener("keyup", function(e) {
+          if(e.which === 13)
+            btnLogin.click();
+
+        });
+
         btnLogin.addEventListener('click', e => {
           const email = txtEmail.value;
           const pass = txtPassword.value;

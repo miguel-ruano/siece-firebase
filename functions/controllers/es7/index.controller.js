@@ -6,7 +6,7 @@ const db = admin.firestore();
 exports.getIndex = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
   const reportedYear =
-    2016;
+    2018;
     // ((new Date()).getFullYear() - 1).toString();
   data.reported_year = reportedYear;
   try {
@@ -53,6 +53,7 @@ exports.getIndex = async (req, res) => {
 
 const topStatistics = (reports, data) => {
   data.forms = reports.length;
+  console.log(reports);
   let totalBeneficiaries = 0;
   let totalFemale = 0;
   let totalMale = 0;
