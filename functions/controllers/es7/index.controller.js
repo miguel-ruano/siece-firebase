@@ -71,16 +71,28 @@ const topStatistics = (reports, data) => {
           totalInvestment += Number(reports[i].programs[j].investment);
         }
       }
-
-      if (reports[i].female_students){
-        totalFemale += Number(reports[i].female_students);
+      console.log("reports["+i+"].pregrado_female_students")
+      console.log(reports[i].pregrado_female_students)
+      if (reports[i].pregrado_female_students){
+        totalFemale += Number(reports[i].pregrado_female_students);
       }
-      if (reports[i].male_students){
-        totalMale += Number(reports[i].male_students);
+      console.log("reports["+i+"].posgrado_female_students")
+      console.log(reports[i].posgrado_female_students)
+      if (reports[i].posgrado_female_students){
+        totalFemale += Number(reports[i].posgrado_female_students);
+      }
+      if (reports[i].pregrado_male_students){
+        totalMale += Number(reports[i].pregrado_male_students);
+      }
+      if (reports[i].posgrado_male_students){
+        totalMale += Number(reports[i].posgrado_male_students);
       }
     }
   }
   data.total_beneficiaries = totalBeneficiaries;
+  console.log("----------------data.total_beneficiaries---------------------")
+  console.log(data.total_beneficiaries)
+  console.log(totalFemale)
   if (totalBeneficiaries > 0) {
     data.percentage_female = (totalFemale / totalBeneficiaries * 100).toFixed(2);
     data.percentage_male = (totalMale / totalBeneficiaries * 100).toFixed(2);
