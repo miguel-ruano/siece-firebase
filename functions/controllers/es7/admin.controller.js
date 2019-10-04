@@ -36,6 +36,13 @@ exports.getReports = async (req, res) => {
         }));
 
     console.log('Reportes: ', data.reports);
+    generateJSONdb().then(function(jsondb){
+      console.log("JSONDB ------ ");
+      console.log(jsondb);
+      data.firestoredb = jsondb;
+    });
+    
+
     return res.render('admin', data);
   } catch (error) {
     console.log('Error: ', error);
@@ -137,3 +144,42 @@ const getInstitutionName = async (userId) => {
     .get();
   return querySnapshot.docs[0].data().name;
 };
+
+
+const dump = async (aux, curr) => {
+  return Promise.all(Object.keys(aux).map((collection) => {
+    return db.collection(collection).get()
+      .then((data) => {
+        let promises = [];
+        data.forEach((doc) => {
+          const data = doc.data();
+          if(!curr[collection]) {
+            curr[collection] =  { 
+              data: { },
+              type: 'collection',
+            };
+            curr[collection].data[doc.id] = {
+              data,
+              type: 'document',
+            }
+          } else {
+            curr[collection].data[doc.id] = data;
+          }
+          promises.push(dump(db.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
+      })
+      return Promise.all(promises);
+    });
+  })).then(() => {
+    return curr;
+  })
+};
+
+const generateJSONdb = async() => {
+  const schema = {
+    users: {},
+    reports: {},
+  };
+  let aux = { ...schema };
+  let answer = {};
+  return dump(aux, answer);
+}

@@ -146,6 +146,10 @@
                     {{error}}
                   </div>
                 {{/if}}
+                <div id="data" data-obj={{firestoredb}}>
+                    Download Me
+                    {{firestoredb}}
+                </div>
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Consultar Reportes</h2>
@@ -269,6 +273,19 @@
           }
         }
       });
+
+      $("#data").html(JSON.stringify({{firestoredb}}, null, 4))
+
+      $("#data").click(function() {
+        $(this).html(JSON.stringify($(this).data().obj, null, 4))
+        $("<a />", {
+          "download": "data.json",
+          "href" : "data:application/json," + JSON.stringify($(this).data().obj, null, 4)
+        }).appendTo("body")
+        .click(function() {
+          $(this).remove()
+        })[0].click()
+      })
     </script>
   </body>
 <!--</html>-->
