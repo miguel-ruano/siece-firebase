@@ -146,9 +146,8 @@
                     {{error}}
                   </div>
                 {{/if}}
-                <div id="data" data-obj={{firestoredb}}>
+                <div id="data">
                     Download Me
-                    {{firestoredb}}
                 </div>
                 <div class="x_panel">
                   <div class="x_title">
@@ -255,6 +254,7 @@
     <script src="vendor/datatables/jszip.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.min.js"></script>
+    <script src="scripts/admin.js"></script>
 
     <script type="text/javascript">
       $("#forms-datatable").DataTable({
@@ -274,18 +274,20 @@
         }
       });
 
-      $("#data").html(JSON.stringify({{firestoredb}}, null, 4))
 
       $("#data").click(function() {
-        $(this).html(JSON.stringify($(this).data().obj, null, 4))
+        downloadObjectAsJson("{{firestoredb}}");
+      });
+   /**   $("#data").click(function() {
+        $(this).html("{{firestoredb}}")
         $("<a />", {
           "download": "data.json",
-          "href" : "data:application/json," + JSON.stringify($(this).data().obj, null, 4)
+          "href" : "data:application/json," + encodeURIComponent("{{firestoredb}}".obj)
         }).appendTo("body")
         .click(function() {
           $(this).remove()
         })[0].click()
-      })
+      })**/
     </script>
   </body>
 <!--</html>-->

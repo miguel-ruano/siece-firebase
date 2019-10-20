@@ -1,5 +1,5 @@
 # SDK
-functions/siece-app-firebase-adminsdk-*.json
+functions/siece-app-*.json
 
 .firebase/
 

@@ -35,13 +35,19 @@ exports.getReports = async (req, res) => {
           return report;
         }));
 
-    console.log('Reportes: ', data.reports);
-    generateJSONdb().then(function(jsondb){
-      console.log("JSONDB ------ ");
-      console.log(jsondb);
-      data.firestoredb = jsondb;
-    });
-    
+    jsonObj= await dump();
+    data.firestoredb = JSON.stringify(jsonObj, null, 4).replace(/(\r\n|\n|\r)/gm,"");
+
+    console.log("data.firestoredb");
+    console.log(data.firestoredb);
+    // console.log('Reportes: ', data.reports);
+    // generateJSONdb().then(function(jsondb){
+    //   console.log("JSONDB ------ ");
+    //   console.log(jsondb);
+    //   data.firestoredb = jsondb;
+    // });
+    // console.log("data.firestoredb");
+    // console.log(data.firestoredb);
 
     return res.render('admin', data);
   } catch (error) {
@@ -54,6 +60,7 @@ exports.getReports = async (req, res) => {
 exports.reviewReport = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
   const params = req.query;
+  const reportsSnapshot = await db.collection('reports').get()
 
   try {
     if (params.reported_year && params.user) {
@@ -145,41 +152,62 @@ const getInstitutionName = async (userId) => {
   return querySnapshot.docs[0].data().name;
 };
 
-
-const dump = async (aux, curr) => {
-  return Promise.all(Object.keys(aux).map((collection) => {
-    return db.collection(collection).get()
-      .then((data) => {
-        let promises = [];
-        data.forEach((doc) => {
-          const data = doc.data();
-          if(!curr[collection]) {
-            curr[collection] =  { 
-              data: { },
-              type: 'collection',
-            };
-            curr[collection].data[doc.id] = {
-              data,
-              type: 'document',
-            }
-          } else {
-            curr[collection].data[doc.id] = data;
-          }
-          promises.push(dump(db.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
-      })
-      return Promise.all(promises);
-    });
-  })).then(() => {
-    return curr;
-  })
-};
-
-const generateJSONdb = async() => {
-  const schema = {
-    users: {},
-    reports: {},
-  };
-  let aux = { ...schema };
-  let answer = {};
-  return dump(aux, answer);
+const dump = async ()=> {
+  console.log("snapshot");
+  const snapshot = await db.collection('reports').get();
+  console.log("snapshot");
+  reports = await Promise.all(
+    snapshot.docs.map(
+      async (doc) => {
+        let report = doc.data();
+        report = {
+          institution_name: await getInstitutionName(report.user_id),
+          user_id: report.user_id,
+          reported_year: report.reported_year,
+          status: report.status,
+          created_at: report.created_at,
+          updated_at: report.updated_at
+        };
+        return report;
+      }));
+  return reports;
 }
+
+// const dump = async (dbRef, aux, curr)=> {
+//   const snapshot = await db.collection('users').get();
+//   return Promise.all(Object.keys(aux).map((collection) => {
+    
+//     return db.collection(collection).get()
+//       .then((data) => {
+//         console.log("ENTROOOOOOO");
+//         let promises = [];
+//         data.forEach((doc) => {
+//           const data = doc.data();
+//           if(!curr[collection]) {
+//             curr[collection] =  { 
+//               data: { },
+//               type: 'collection',
+//             };
+//             curr[collection].data[doc.id] = {
+//               data,
+//               type: 'document',
+//             }
+//           } else {
+//             curr[collection].data[doc.id] = data;
+//           }
+//           promises.push(dump(dbRef.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
+//       })
+//       return Promise.all(promises);
+//     });
+//   })).then(() => {
+//     return curr;
+//   })
+// };
+
+const generateJSONdb = () => {
+  
+  // dump().then((answer) => {
+  //   console.log("JSON.stringify(answer, null, 4)");
+  //   console.log(JSON.stringify(answer, null, 4));
+  // });
+};

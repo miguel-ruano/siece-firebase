@@ -1,6 +1,10 @@
 'use strict';var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}const admin = require('firebase-admin');
 const db = admin.firestore();
+const Intl = require("intl");
 
+
+
+const df = new Intl.DateTimeFormat('es', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
 exports.getReports = (() => {var _ref = (0, _asyncToGenerator3.default)(function* (req, res) {
     let data = { user: req.user };
@@ -62,8 +66,8 @@ exports.createReport = (() => {var _ref2 = (0, _asyncToGenerator3.default)(funct
             user_id: req.user.uid,
             reported_year: Number(formData.reported_year),
             status: 'Incompleto',
-            created_at: new Date().toUTCString(),
-            updated_at: new Date().toUTCString() });
+            created_at: df.format(new Date()),
+            updated_at: df.format(new Date()) });
 
           data.success = 'Reporte creado correctamente';
         } else {
@@ -74,6 +78,9 @@ exports.createReport = (() => {var _ref2 = (0, _asyncToGenerator3.default)(funct
         console.log('Error: ', 'User must have a user profile');
         data.error = 'Debe completar los datos del perfil para crear reportes';
       }
+
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 
       const reportsSnapshot = yield db.collection('reports').
       where('user_id', '==', req.user.uid).

@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-var serviceAccount = require("./siece-app-firebase-adminsdk-xypyr-14e04648bc.json");
+var serviceAccount = require("./siece-app-228de3d13fea.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

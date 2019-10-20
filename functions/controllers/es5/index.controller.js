@@ -6,7 +6,7 @@ const db = admin.firestore();
 exports.getIndex = (() => {var _ref = (0, _asyncToGenerator3.default)(function* (req, res) {
     let data = { user: req.user, is_admin: req.is_admin };
     const reportedYear =
-    2016;
+    2018;
     // ((new Date()).getFullYear() - 1).toString();
     data.reported_year = reportedYear;
     try {
@@ -24,6 +24,7 @@ exports.getIndex = (() => {var _ref = (0, _asyncToGenerator3.default)(function* 
       } else {
         console.log('Documents found.');
         let reports = querySnapshot.docs.map(function (doc) {return doc.data();});
+        // console.log("reports");
         // console.log(reports);
         topStatistics(reports, data);
         yield investmentByCountry(reports, data);
@@ -58,16 +59,40 @@ const topStatistics = (reports, data) => {
   let totalMale = 0;
   let totalInvestment = 0;
   for (let i = 0; i < reports.length; i++) {
+    // console.log("reports[i].programs");
+    // console.log(reports[i].programs);
     if (reports[i].programs) {
       for (let j = 0; j < reports[i].programs.length; j++) {
-        totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
-        totalInvestment += Number(reports[i].programs[j].investment);
+        // console.log(reports[i].programs[j].beneficiaries)
+        if (reports[i].programs[j].beneficiaries) {
+          totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
+        }
+        if (reports[i].programs[j].investment) {
+          totalInvestment += Number(reports[i].programs[j].investment);
+        }
       }
-      totalFemale += Number(reports[i].female_students);
-      totalMale += Number(reports[i].male_students);
+      console.log("reports[" + i + "].pregrado_female_students");
+      console.log(reports[i].pregrado_female_students);
+      if (reports[i].pregrado_female_students) {
+        totalFemale += Number(reports[i].pregrado_female_students);
+      }
+      console.log("reports[" + i + "].posgrado_female_students");
+      console.log(reports[i].posgrado_female_students);
+      if (reports[i].posgrado_female_students) {
+        totalFemale += Number(reports[i].posgrado_female_students);
+      }
+      if (reports[i].pregrado_male_students) {
+        totalMale += Number(reports[i].pregrado_male_students);
+      }
+      if (reports[i].posgrado_male_students) {
+        totalMale += Number(reports[i].posgrado_male_students);
+      }
     }
   }
   data.total_beneficiaries = totalBeneficiaries;
+  console.log("----------------data.total_beneficiaries---------------------");
+  console.log(data.total_beneficiaries);
+  console.log(totalFemale);
   if (totalBeneficiaries > 0) {
     data.percentage_female = (totalFemale / totalBeneficiaries * 100).toFixed(2);
     data.percentage_male = (totalMale / totalBeneficiaries * 100).toFixed(2);
@@ -88,6 +113,8 @@ const investmentByCountry = (() => {var _ref3 = (0, _asyncToGenerator3.default)(
     for (let i = 0; i < reports.length; i++) {
       if (reports[i].programs) {
         const institutionCountry = yield getInstitutionCountry(reports[i]);
+        // console.log("institutionCountry")
+        // console.log(institutionCountry)
         let investment = investments.find(function (item) {return item.country_code === institutionCountry;});
         if (!investment) {
           investment = {
@@ -98,7 +125,9 @@ const investmentByCountry = (() => {var _ref3 = (0, _asyncToGenerator3.default)(
           investments.push(investment);
         }
         for (let j = 0; j < reports[i].programs.length; j++) {
-          investment.amount += Number(reports[i].programs[j].investment);
+          if (reports[i].programs[j].investment) {
+            investment.amount += Number(reports[i].programs[j].investment);
+          }
         }
       }
     }
@@ -108,6 +137,8 @@ const investmentByCountry = (() => {var _ref3 = (0, _asyncToGenerator3.default)(
       return 1;
     });
     data.investment_by_country = investments.slice(0, 15);
+    // console.log("data.investment_by_country")
+    // console.log(data.investment_by_country)
   });return function investmentByCountry(_x4, _x5) {return _ref3.apply(this, arguments);};})();
 
 const investmentByInstitution = (() => {var _ref4 = (0, _asyncToGenerator3.default)(function* (reports, data, res) {

@@ -36,6 +36,13 @@ exports.getReports = (() => {var _ref = (0, _asyncToGenerator3.default)(function
         });return function (_x3) {return _ref2.apply(this, arguments);};})()));
 
       console.log('Reportes: ', data.reports);
+      generateJSONdb().then(function (jsondb) {
+        console.log("JSONDB ------ ");
+        console.log(jsondb);
+        data.firestoredb = jsondb;
+      });
+
+
       return res.render('admin', data);
     } catch (error) {
       console.log('Error: ', error);
@@ -137,3 +144,42 @@ const getInstitutionName = (() => {var _ref5 = (0, _asyncToGenerator3.default)(f
     get();
     return querySnapshot.docs[0].data().name;
   });return function getInstitutionName(_x8) {return _ref5.apply(this, arguments);};})();
+
+
+const dump = (() => {var _ref6 = (0, _asyncToGenerator3.default)(function* (aux, curr) {
+    return Promise.all(Object.keys(aux).map(function (collection) {
+      return db.collection(collection).get().
+      then(function (data) {
+        let promises = [];
+        data.forEach(function (doc) {
+          const data = doc.data();
+          if (!curr[collection]) {
+            curr[collection] = {
+              data: {},
+              type: 'collection' };
+
+            curr[collection].data[doc.id] = {
+              data,
+              type: 'document' };
+
+          } else {
+            curr[collection].data[doc.id] = data;
+          }
+          promises.push(dump(db.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
+        });
+        return Promise.all(promises);
+      });
+    })).then(function () {
+      return curr;
+    });
+  });return function dump(_x9, _x10) {return _ref6.apply(this, arguments);};})();
+
+const generateJSONdb = (() => {var _ref7 = (0, _asyncToGenerator3.default)(function* () {
+    const schema = {
+      users: {},
+      reports: {} };
+
+    let aux = { schema };
+    let answer = {};
+    return dump(aux, answer);
+  });return function generateJSONdb() {return _ref7.apply(this, arguments);};})();
