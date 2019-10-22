@@ -24,6 +24,7 @@
     "express-handlebars": "^3.0.0",
     "firebase-admin": "^8.6.1",
     "firebase-functions": "^3.3.0",
+    "firestore-export-import": "^0.2.9",
     "handlebars": "^4.0.11",
     "i18n-iso-countries": "^3.6.3",
     "intl": "^1.2.5",

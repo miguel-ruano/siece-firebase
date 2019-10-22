@@ -1,5 +1,7 @@
 const admin = require('firebase-admin');
 const db = admin.firestore();
+const firestoreService = require('firestore-export-import');
+
 
 
 exports.getReports = async (req, res) => {
@@ -34,8 +36,19 @@ exports.getReports = async (req, res) => {
           };
           return report;
         }));
+    
 
-    jsonObj= await dump();
+    
+    console.log("JSON.stringify(collections)");
+    jsonObj= await firestoreService
+    .backup("reports")
+    .then(collections => {
+      console.log("JSON.stringify(collections)");
+      return collections;
+    })
+    
+    console.log("jsonObj");
+    console.log(jsonObj);
     data.firestoredb = JSON.stringify(jsonObj, null, 4).replace(/(\r\n|\n|\r)/gm,"");
 
     console.log("data.firestoredb");
@@ -153,24 +166,7 @@ const getInstitutionName = async (userId) => {
 };
 
 const dump = async ()=> {
-  console.log("snapshot");
-  const snapshot = await db.collection('reports').get();
-  console.log("snapshot");
-  reports = await Promise.all(
-    snapshot.docs.map(
-      async (doc) => {
-        let report = doc.data();
-        report = {
-          institution_name: await getInstitutionName(report.user_id),
-          user_id: report.user_id,
-          reported_year: report.reported_year,
-          status: report.status,
-          created_at: report.created_at,
-          updated_at: report.updated_at
-        };
-        return report;
-      }));
-  return reports;
+  
 }
 
 // const dump = async (dbRef, aux, curr)=> {
@@ -204,10 +200,4 @@ const dump = async ()=> {
 //   })
 // };
 
-const generateJSONdb = () => {
   
-  // dump().then((answer) => {
-  //   console.log("JSON.stringify(answer, null, 4)");
-  //   console.log(JSON.stringify(answer, null, 4));
-  // });
-};
