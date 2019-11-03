@@ -43,7 +43,6 @@ exports.getReports = async (req, res) => {
     jsonObj= await firestoreService
     .backup("reports")
     .then(async (collections) => {
-      console.log("JSON.stringify(collections)");
       values = [];
       for (var i = 0; i< Object.keys(collections.reports).length; i++){
           values.push(collections.reports[Object.keys(collections.reports)[i]]);
@@ -51,8 +50,6 @@ exports.getReports = async (req, res) => {
       for (var j=0;j<values.length; j++){
         var u_id = values[j]["user_id"];
         values[j]["institution_name"] = await getInstitutionName(u_id);
-        console.log("values[j][institution_name] ");
-        console.log(values[j]["institution_name"] );
       }
       return values;
     })
