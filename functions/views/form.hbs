@@ -857,7 +857,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
                           {{#if report}}
                             <button type="submit" class="btn btn-success">Solo Guardar</button>
-                            <button type="button" class="btn btn-success" onclick="sendForReview()">Guardar y Enviar para Revisión</button>
+                            <button id="accept" type="submit" class="btn btn-success" onclick="sendForReview()">Guardar y Enviar para Revisión</button>
                           {{/if}}
                         </div>
                       </div>
@@ -1568,12 +1568,23 @@
     }
 
     function sendForReview() {
+      console.log($("#complete").attr('value'));
+      if ($("#complete").attr('value')==1){
+        $("#accept").attr('formnovalidate','formnovalidate');
+        $("#demo-form2").submit();
+        console.log("second enviar");
+      }
       $('<input />').attr('type', 'hidden')
+          .attr('id', "complete")
           .attr('name', "complete")
           .attr('value', 1)
           .appendTo('#demo-form2');
-
-      document.getElementById('demo-form2').submit();
+      $("#demo-form2").validate({
+        submitHandler: function(form) {
+          console.log($("#complete").attr('value'));
+          form.submit();
+        }
+      });
     }
 
     function validateTotalCurrentPortfolio() {
