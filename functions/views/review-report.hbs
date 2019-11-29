@@ -868,6 +868,7 @@
                           </div>
                         </div>
                       </div>
+                      <div id="summary"></div>
                       <input type="hidden" id="accepted" name="accepted">
                       <!-- fin preguntas -->
                       <div class="ln_solid"></div>
@@ -875,7 +876,7 @@
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-10">
                           <button type="button" class="btn btn-danger" onclick="declineReport()">Rechazar</button>
-                          <button type="button" class="btn btn-success" onclick="acceptReport()">Aceptar</button>
+                          <button id="accept" type="submit" class="btn btn-success" onclick="acceptReport()">Aceptar</button>
                         </div>
                       </div>
                     </form>
@@ -900,6 +901,8 @@
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <!-- Bootstrap -->
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -1463,9 +1466,19 @@
     }
 
     function acceptReport() {
+      console.log($("#accepted").attr('value'));
+      if ($("#accepted").attr('value')==1){
+        $("#accept").attr('formnovalidate','formnovalidate');
+        $("#demo-form2").submit();
+        console.log("second aceptar");
+      }
       $("#accepted").attr('value', 1);
-
-      document.getElementById('demo-form2').submit();
+      $("#demo-form2").validate({
+        submitHandler: function(form) {
+          console.log($("#accepted").attr('value'));
+          form.submit();
+        }
+      });
     }
 
     function declineReport() {
