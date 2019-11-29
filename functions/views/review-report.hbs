@@ -954,16 +954,18 @@
       {{#if report.regulated}}
         $("#regulated_{{report.regulated}}").attr("checked", true);
         if ($("#regulated_si").is(":checked")) {
-          $("#regulating_entity").val("{{report.regulating_entity}}");
-          // .attr("required", true).removeAttr("disabled");
+          $("#regulating_entity").val("{{report.regulating_entity}}")
+          .attr("required", true);
+          //.removeAttr("disabled");
         }
       {{/if}}
 
       {{#if report.credit_rating}}
         $("#credit_rating_{{report.credit_rating}}").attr("checked", true);
         if ($("#credit_rating_si").is(":checked")) {
-          $("#rating_agency").val("{{report.rating_agency}}");
-          // .attr("required", true).removeAttr("disabled");
+          $("#rating_agency").val("{{report.rating_agency}}")
+          .attr("required", true);
+          // .removeAttr("disabled");
         }
       {{/if}}
 

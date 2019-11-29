@@ -172,6 +172,22 @@ exports.processReport = async (req, res) => {
         }
         report.funding_sources = sources;
 
+        if (formData.regulated){
+          report.regulated = formData.regulated;
+        }
+        if (formData.regulating_entity){
+          report.regulating_entity = formData.regulating_entity;
+        }
+        if (formData.credit_rating){
+          report.credit_rating = formData.credit_rating;
+        }
+        
+        if (formData.rating_agency){
+          report.rating_agency = formData.rating_agency;
+        }
+
+        
+
         if (formData.total_investment) {
           report.total_investment = Number(formData.total_investment);
         }
