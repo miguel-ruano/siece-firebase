@@ -147,6 +147,7 @@
                   </div>
                 {{/if}}
                 <button id="data" type="submit" class="btn btn-success">Descargar Base de Datos</button>
+                <button id="usersdata" type="submit" class="btn btn-success">Descargar Datos de Usuarios</button>
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Consultar Reportes</h2>
@@ -275,6 +276,10 @@
 
       $("#data").click(function() {
         downloadObjectAsJson("{{firestoredb}}");
+      });
+
+      $("#usersdata").click(function() {
+        downloadObjectAsJson("{{usersdb}}");
       });
    /**   $("#data").click(function() {
         $(this).html("{{firestoredb}}")
