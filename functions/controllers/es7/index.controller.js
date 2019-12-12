@@ -64,9 +64,9 @@ const topStatistics = (reports, data) => {
     if (reports[i].programs) {
       for (let j = 0; j < reports[i].programs.length; j++) {
         // console.log(reports[i].programs[j].beneficiaries)
-        if (reports[i].programs[j].beneficiaries){
-          totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
-        }
+        // if (reports[i].programs[j].beneficiaries){
+        //   totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
+        // }
         if (reports[i].programs[j].investment){
           totalInvestment += Number(reports[i].programs[j].investment);
         }
@@ -74,17 +74,21 @@ const topStatistics = (reports, data) => {
       console.log("reports["+i+"].pregrado_female_students")
       console.log(reports[i].pregrado_female_students)
       if (reports[i].pregrado_female_students){
+        totalBeneficiaries += Number(reports[i].pregrado_female_students);
         totalFemale += Number(reports[i].pregrado_female_students);
       }
       console.log("reports["+i+"].posgrado_female_students")
       console.log(reports[i].posgrado_female_students)
       if (reports[i].posgrado_female_students){
+        totalBeneficiaries += Number(reports[i].posgrado_female_students);
         totalFemale += Number(reports[i].posgrado_female_students);
       }
       if (reports[i].pregrado_male_students){
+        totalBeneficiaries += Number(reports[i].pregrado_male_students);
         totalMale += Number(reports[i].pregrado_male_students);
       }
       if (reports[i].posgrado_male_students){
+        totalBeneficiaries += Number(reports[i].posgrado_male_students);
         totalMale += Number(reports[i].posgrado_male_students);
       }
     }
