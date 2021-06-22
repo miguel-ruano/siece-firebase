@@ -1,13 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const settings = require('./settings');
 
-var serviceAccount = require("./siece-app-firebase-adminsdk-kavr1-d4b89d08b2.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://siece-app.firebaseio.com"
-});
-// let db = admin.firestore();
+admin.initializeApp();
+// const db = admin.firestore();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -70,3 +67,4 @@ routes(app);
 
 
 exports.app = functions.https.onRequest(app);
+// exports.db = db;

@@ -1,10 +1,10 @@
 const admin = require('firebase-admin');
 const db = admin.firestore();
-const firestoreService = require('firestore-export-import');
 
 
 
 exports.getReports = async (req, res) => {
+  const firestoreService = require('firestore-export-import');
   let data = { user: req.user, is_admin: req.is_admin };
   if (req.data)
     data = req.data;
@@ -62,16 +62,16 @@ exports.getReports = async (req, res) => {
       return values;
     })
     
-    console.log("jsonObj");
-    console.log(jsonObj);
+    // console.log("jsonObj");
+    // console.log(jsonObj);
     
-    console.log("userJsonObj");
-    console.log(userJsonObj);
+    // console.log("userJsonObj");
+    // console.log(userJsonObj);
     data.firestoredb = JSON.stringify(jsonObj, null, 4).replace(/(\r\n|\n|\r)/gm,"");
     data.usersdb = JSON.stringify(userJsonObj, null, 4).replace(/(\r\n|\n|\r)/gm,"");
 
-    console.log("data.firestoredb");
-    console.log(data.firestoredb);
+    // console.log("data.firestoredb");
+    // console.log(data.firestoredb);
     // console.log('Reportes: ', data.reports);
     // generateJSONdb().then(function(jsondb){
     //   console.log("JSONDB ------ ");

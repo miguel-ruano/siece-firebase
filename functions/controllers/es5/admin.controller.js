@@ -1,5 +1,7 @@
 'use strict';var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}const admin = require('firebase-admin');
 const db = admin.firestore();
+const firestoreService = require('firestore-export-import');
+
 
 
 exports.getReports = (() => {var _ref = (0, _asyncToGenerator3.default)(function* (req, res) {
@@ -35,13 +37,49 @@ exports.getReports = (() => {var _ref = (0, _asyncToGenerator3.default)(function
           return report;
         });return function (_x3) {return _ref2.apply(this, arguments);};})()));
 
-      console.log('Reportes: ', data.reports);
-      generateJSONdb().then(function (jsondb) {
-        console.log("JSONDB ------ ");
-        console.log(jsondb);
-        data.firestoredb = jsondb;
-      });
 
+
+      jsonObj = yield firestoreService.
+      backup("reports").
+      then((() => {var _ref3 = (0, _asyncToGenerator3.default)(function* (collections) {
+          values = [];
+          for (var i = 0; i < Object.keys(collections.reports).length; i++) {
+            values.push(collections.reports[Object.keys(collections.reports)[i]]);
+          }
+          for (var j = 0; j < values.length; j++) {
+            var u_id = values[j]["user_id"];
+            values[j]["institution_name"] = yield getInstitutionName(u_id);
+          }
+          return values;
+        });return function (_x4) {return _ref3.apply(this, arguments);};})());
+      userJsonObj = yield firestoreService.
+      backup("users").
+      then((() => {var _ref4 = (0, _asyncToGenerator3.default)(function* (collections) {
+          values = [];
+          for (var i = 0; i < Object.keys(collections.users).length; i++) {
+            values.push(collections.users[Object.keys(collections.users)[i]]);
+          }
+          return values;
+        });return function (_x5) {return _ref4.apply(this, arguments);};})());
+
+      console.log("jsonObj");
+      console.log(jsonObj);
+
+      console.log("userJsonObj");
+      console.log(userJsonObj);
+      data.firestoredb = JSON.stringify(jsonObj, null, 4).replace(/(\r\n|\n|\r)/gm, "");
+      data.usersdb = JSON.stringify(userJsonObj, null, 4).replace(/(\r\n|\n|\r)/gm, "");
+
+      console.log("data.firestoredb");
+      console.log(data.firestoredb);
+      // console.log('Reportes: ', data.reports);
+      // generateJSONdb().then(function(jsondb){
+      //   console.log("JSONDB ------ ");
+      //   console.log(jsondb);
+      //   data.firestoredb = jsondb;
+      // });
+      // console.log("data.firestoredb");
+      // console.log(data.firestoredb);
 
       return res.render('admin', data);
     } catch (error) {
@@ -51,9 +89,10 @@ exports.getReports = (() => {var _ref = (0, _asyncToGenerator3.default)(function
     }
   });return function (_x, _x2) {return _ref.apply(this, arguments);};})();
 
-exports.reviewReport = (() => {var _ref3 = (0, _asyncToGenerator3.default)(function* (req, res) {
+exports.reviewReport = (() => {var _ref5 = (0, _asyncToGenerator3.default)(function* (req, res) {
     let data = { user: req.user, is_admin: req.is_admin };
     const params = req.query;
+    const reportsSnapshot = yield db.collection('reports').get();
 
     try {
       if (params.reported_year && params.user) {
@@ -85,9 +124,9 @@ exports.reviewReport = (() => {var _ref3 = (0, _asyncToGenerator3.default)(funct
       data.error = 'Error al consultar la base de datos.';
       return res.render('review-report', data);
     }
-  });return function (_x4, _x5) {return _ref3.apply(this, arguments);};})();
+  });return function (_x6, _x7) {return _ref5.apply(this, arguments);};})();
 
-exports.acceptOrDeclineReport = (() => {var _ref4 = (0, _asyncToGenerator3.default)(function* (req, res) {
+exports.acceptOrDeclineReport = (() => {var _ref6 = (0, _asyncToGenerator3.default)(function* (req, res) {
     let data = { user: req.user, is_admin: req.is_admin };
     const params = req.query;
     const formData = req.body;
@@ -136,50 +175,46 @@ exports.acceptOrDeclineReport = (() => {var _ref4 = (0, _asyncToGenerator3.defau
       data.error = 'Error al consultar la base de datos.';
       return res.render('review-report', data);
     }
-  });return function (_x6, _x7) {return _ref4.apply(this, arguments);};})();
+  });return function (_x8, _x9) {return _ref6.apply(this, arguments);};})();
 
-const getInstitutionName = (() => {var _ref5 = (0, _asyncToGenerator3.default)(function* (userId) {
+const getInstitutionName = (() => {var _ref7 = (0, _asyncToGenerator3.default)(function* (userId) {
     const querySnapshot = yield db.collection('users').
     where('user_id', '==', userId).
     get();
     return querySnapshot.docs[0].data().name;
-  });return function getInstitutionName(_x8) {return _ref5.apply(this, arguments);};})();
+  });return function getInstitutionName(_x10) {return _ref7.apply(this, arguments);};})();
 
+const dump = (() => {var _ref8 = (0, _asyncToGenerator3.default)(function* () {
 
-const dump = (() => {var _ref6 = (0, _asyncToGenerator3.default)(function* (aux, curr) {
-    return Promise.all(Object.keys(aux).map(function (collection) {
-      return db.collection(collection).get().
-      then(function (data) {
-        let promises = [];
-        data.forEach(function (doc) {
-          const data = doc.data();
-          if (!curr[collection]) {
-            curr[collection] = {
-              data: {},
-              type: 'collection' };
+  });return function dump() {return _ref8.apply(this, arguments);};})();
 
-            curr[collection].data[doc.id] = {
-              data,
-              type: 'document' };
+// const dump = async (dbRef, aux, curr)=> {
+//   const snapshot = await db.collection('users').get();
+//   return Promise.all(Object.keys(aux).map((collection) => {
 
-          } else {
-            curr[collection].data[doc.id] = data;
-          }
-          promises.push(dump(db.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
-        });
-        return Promise.all(promises);
-      });
-    })).then(function () {
-      return curr;
-    });
-  });return function dump(_x9, _x10) {return _ref6.apply(this, arguments);};})();
-
-const generateJSONdb = (() => {var _ref7 = (0, _asyncToGenerator3.default)(function* () {
-    const schema = {
-      users: {},
-      reports: {} };
-
-    let aux = { schema };
-    let answer = {};
-    return dump(aux, answer);
-  });return function generateJSONdb() {return _ref7.apply(this, arguments);};})();
+//     return db.collection(collection).get()
+//       .then((data) => {
+//         console.log("ENTROOOOOOO");
+//         let promises = [];
+//         data.forEach((doc) => {
+//           const data = doc.data();
+//           if(!curr[collection]) {
+//             curr[collection] =  { 
+//               data: { },
+//               type: 'collection',
+//             };
+//             curr[collection].data[doc.id] = {
+//               data,
+//               type: 'document',
+//             }
+//           } else {
+//             curr[collection].data[doc.id] = data;
+//           }
+//           promises.push(dump(dbRef.collection(collection).doc(doc.id), aux[collection], curr[collection].data[doc.id]));
+//       })
+//       return Promise.all(promises);
+//     });
+//   })).then(() => {
+//     return curr;
+//   })
+// };
