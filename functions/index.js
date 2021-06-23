@@ -26,8 +26,13 @@ app.use(cookieParser());
 
 // app.engine('hbs', engines.handlebars);
 app.engine('hbs', exphbs({ defaultLayout: 'main' }));
+var hbs = exphbs.create({});
+hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
 app.set('views', './views');
 app.set('view engine', 'hbs');
+
 // app.use(session({
 //   cookie: { maxAge: 60000 },
 //   store: sessionStore,

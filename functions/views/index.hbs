@@ -143,11 +143,13 @@
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <h4 class="count_top"><i class="fa fa-calendar"></i> Año Reportado</h4>
               <div class="count">
-                {{#if reported_year}}
-                  {{reported_year}}
-                {{else}}
-                  -
-                {{/if}}
+                <form id="year_select"  method="GET" >
+                  <select name="year" value="{{reported_year}}" onchange="$('#year_select').submit()" class="form-control transparent_inherit_input">
+                    {{#each available_years as |year|}}
+                      <option value="{{year}}" {{#ifEquals ../reported_year year }}selected{{/ifEquals}}>{{year}}</option>
+                    {{/each}}
+                  </select>
+                </form>
               </div>
               <!--<span class="count_bottom"><i class="green">4% </i> From last Week</span>-->
             </div>
@@ -173,31 +175,20 @@
               </div>
               <!--<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>-->
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <h4 class="count_top"><i class="fa fa-venus"></i> Porcentaje de Mujeres</h4>
-              <div class="count">
-                {{#if percentage_female}}
-                  {{percentage_female}}%
-                {{else}}
-                  -
-                {{/if}}
-              </div>
-              <!--<span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>-->
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <h4 class="count_top"><i class="fa fa-mars"></i> Porcentaje de Hombres</h4>
-              <div class="count">
-                {{#if percentage_male}}
-                  {{percentage_male}}%
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+              <h4 class="count_top"><i class="fa fa-money"></i> Promedio crédito educativo por estudiante</h4>
+              <div class="green count">
+                {{#if investment_student}}
+                  USD {{investment_student}}
                 {{else}}
                   -
                 {{/if}}
               </div>
               <!--<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>-->
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
               <h4 class="count_top"><i class="fa fa-money"></i> Total invertido en dólares</h4>
-              <h4 class="green custom-count">
+              <h4 class="green count">
                 {{#if total_investment}}
                   USD {{total_investment}}
                 {{else}}

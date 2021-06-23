@@ -4253,3 +4253,10 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     background-color: #ffff !important;
 }
 /** /bootstrap-datetimepicker **/
+.transparent_inherit_input{
+    font-size: inherit;
+    height: initial;
+    padding: .1em;
+    background: transparent;
+    color: inherit;
+} 

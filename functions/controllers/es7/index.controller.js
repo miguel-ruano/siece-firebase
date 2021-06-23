@@ -5,10 +5,15 @@ const db = admin.firestore();
 
 exports.getIndex = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
-  const reportedYear =
-    2018;
-    // ((new Date()).getFullYear() - 1).toString();
+  const reportedYear = req.query.year && !isNaN(parseInt(req.query.year)) ? parseInt(req.query.year) : new Date().getUTCFullYear() - 1;
   data.reported_year = reportedYear;
+  data.available_years = [];
+  let startYear = 2015;
+  let endYear = (new Date()).getFullYear() - 1;
+  for(let i=startYear; i<=endYear; i++){
+    data.available_years.push(i.toString())
+  }
+  console.log(data.available_years);
   try {
     const querySnapshot = await db.collection('reports')
       .where('reported_year', '==', reportedYear)
@@ -101,6 +106,7 @@ const topStatistics = (reports, data) => {
     data.percentage_female = (totalFemale / totalBeneficiaries * 100).toFixed(2);
     data.percentage_male = (totalMale / totalBeneficiaries * 100).toFixed(2);
     data.total_beneficiaries = data.total_beneficiaries.toLocaleString('en-US', { style: 'decimal' });
+    data.investment_student = (totalInvestment / totalBeneficiaries).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
   }
   data.total_investment = totalInvestment.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
