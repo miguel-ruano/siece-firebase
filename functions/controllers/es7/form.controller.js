@@ -4,6 +4,8 @@ const Intl = require("intl")
 
 
 
+let reportedYear = (new Date()).getFullYear() - 1;
+
 const df = new Intl.DateTimeFormat('es', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
 exports.getReports = async (req, res) => {
@@ -23,6 +25,8 @@ exports.getReports = async (req, res) => {
       if (reportsSnapshot.empty) {
         console.log('No documents found.');
       }
+
+      data.reported_year = reportedYear;
 
       data.reports =
         reportsSnapshot.docs.map((doc) => {
@@ -196,6 +200,10 @@ exports.processReport = async (req, res) => {
           report.total_students = Number(formData.total_students);
         }
 
+        if (formData.total_students_year_since) {
+          report.total_students_year_since = Number(formData.total_students_year_since);
+        }
+
         let current_portfolio = [];
         if (formData.current_portfolio && formData.current_portfolio_amounts) {
           if (typeof formData.current_portfolio === typeof []) {
@@ -327,6 +335,14 @@ exports.processReport = async (req, res) => {
           report.non_payment_risk = non_payment_risk;
         }
 
+        if (formData.pregrado_students) {
+          report.pregrado_students = Number(formData.pregrado_students);
+        }
+
+        if (formData.posgrado_students) {
+          report.posgrado_students = Number(formData.posgrado_students);
+        }
+
         if (formData.pregrado_male_students) {
           report.pregrado_male_students = Number(formData.pregrado_male_students);
         }
@@ -341,6 +357,14 @@ exports.processReport = async (req, res) => {
 
         if (formData.posgrado_female_students) {
           report.posgrado_female_students = Number(formData.posgrado_female_students);
+        }
+
+        if (formData.pregrado_students_economic) {
+          report.pregrado_students_economic = Number(formData.pregrado_students_economic);
+        }
+
+        if (formData.posgrado_students_economic) {
+          report.posgrado_students_economic = Number(formData.posgrado_students_economic);
         }
 
         if (formData.pregrado_high_students) {

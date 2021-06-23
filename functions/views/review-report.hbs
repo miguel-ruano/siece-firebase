@@ -177,7 +177,7 @@
                           <input id="institution_name" class="form-control" type="text" value="{{report.institution_name}}" readonly>
                         </div>
                       </div>
-                      <!-- pregunta 9 -->
+                      <!-- pregunta 1 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
                           1. Fuentes y montos actuales de financiamiento del Crédito Educativo en su institución
@@ -314,55 +314,15 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 10 -->
-                      <div class="form-group">
-                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          2. ¿La Organización está regulada por la Comisión Bancaria o Superintendencia financiera,
-                          u otra autoridad financiera?.
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <div class="radio">
-                            <label>
-                              <input type="radio" value="si" id="regulated_si" name="regulated" disabled>
-                              Sí
-                            </label>
-                            <label for="regulating_entity">Indique la entidad reguladora: </label>
-                            <input type="text" id="regulating_entity" name="regulating_entity" readonly>
-                          </div>
-                          <div class="radio">
-                            <label>
-                              <input type="radio" value="no" id="regulated_no" name="regulated" disabled>
-                              No
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- pregunta 11 -->
-                      <div class="form-group">
-                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          3. ¿La Organización cuenta con una calificación crediticia?.
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <div class="radio">
-                            <label>
-                              <input type="radio" value="si" id="credit_rating_si" name="credit_rating" disabled>
-                              Sí
-                            </label>
-                            <label for="rating_agency">Indique la agencia calificadora: </label>
-                            <input type="text" id="rating_agency" name="rating_agency" readonly>
-                          </div>
-                          <div class="radio">
-                            <label>
-                              <input type="radio" value="no" id="credit_rating_no" name="credit_rating" disabled>
-                              No
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- pregunta 12 -->
+                      
+                      <!-- pregunta 2 -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="program_quantity">
-                          4. Número de Programas o Líneas de C.E. que ofrece la institución
+                          2. Número de Programas o Líneas de C.E. que ofrece la institución
+                          <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                                tabindex="1">
+                            <i class="fa fa-question-circle"></i>
+                          </span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 mt-1">
                           <select class="select2_single form-control" id="program_quantity" name="program_quantity"
@@ -381,13 +341,13 @@
                           </select>
                         </div>
                       </div>
-                      <!-- programas (preguntas 13 - 22) -->
+                      <!-- programas (preguntas 4.1 - 4.10A) -->
                       <div id="programs_container">
                       </div>
-                      <!-- pregunta 23 -->
+                      <!-- pregunta 3 -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_investment">
-                          5. Monto de los recursos invertidos en Crédito Educativo por la Institución, desde
+                          3. Monto de los recursos invertidos en Crédito Educativo por la Institución, desde
                           la fundación hasta el año que se reporta
                           <span id="tooltip" class="tool" data-tip="Se reporta el valor acumulado invertido en Crédito Educativo, desde que inició operaciones hasta el año que se informa. (USD al cierre del año fiscal)"
                                 tabindex="1">
@@ -398,20 +358,26 @@
                           <input type="number" id="total_investment" name="total_investment" class="form-control mt-2" min="0" readonly>
                         </div>
                       </div>
-                      <!-- pregunta 24 -->
+                      <!-- pregunta 4 -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_students">
-                          6. Número total de estudiantes, con Crédito Educativo, atendidos por la institución
-                          desde su fundación
+                          4. Número total de estudiantes, con Crédito Educativo, atendidos por la institución
+                          desde su fundación o desde el año que se reporta
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="number" id="total_students" name="total_students" class="form-control mt-1" min="0" step="1" readonly>
+                        <div class="col-md-6 col-sm-6 col-xs-12 pt">
+                          <div class="col-xs-12">
+                            <input type="number" id="total_students" name="total_students" class="form-control mt-0" min="0" step="1" readonly>
+                          </div>
+                          <div class="col-xs-12 mt-1">
+                            <label class="col-sm-3" for="total_students_year_since">Desde el año: </label>
+                            <input class="col-sm-3" type="number" step="1" id="total_students_year_since" name="total_students_year_since" min="1800" readonly>
+                          </div>
                         </div>
                       </div>
-                      <!-- pregunta 25 -->
+                      <!-- pregunta 5 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          7. Monto de la cartera vigente
+                          5. Monto de la cartera vigente
                           <span id="tooltip" class="tool" data-tip="Monto total de créditos que tienen sus amortizaciones de capital y pago de intereses al día, conforme al plan de pagos establecido en los contratos de crédito. (USD al cierre del año fiscal)"
                                 tabindex="1">
                             <i class="fa fa-question-circle"></i>
@@ -460,10 +426,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 25A -->
+                      <!-- pregunta 5A -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          7A. Monto de la cartera vigente por género (USD)
+                          5A. Monto de la cartera vigente por género (USD)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
@@ -484,10 +450,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 26 -->
+                      <!-- pregunta 6 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          8. Monto de la cartera vencida
+                          6. Monto de la cartera vencida
                           <span id="tooltip" class="tool" data-tip="Monto total de créditos que tienen sus amortizaciones de capital y pago de intereses con un atraso mayor a 90 días. (USD al cierre del año fiscal)"
                                 tabindex="1">
                             <i class="fa fa-question-circle"></i>
@@ -536,10 +502,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 26A -->
+                      <!-- pregunta 6A -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          8A. Monto de la cartera vencida por género (USD)
+                          6A. Monto de la cartera vencida por género (USD)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
@@ -560,10 +526,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 27 -->
+                      <!-- pregunta 7 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          9. Monto de la cartera en ejecución
+                          7. Monto de la cartera en ejecución
                           <span id="tooltip" class="tool" data-tip="Monto total de créditos por los cuales la IPSCE ha iniciado acciones judiciales para el cobro. (USD al cierre del año fiscal)"
                                 tabindex="1">
                             <i class="fa fa-question-circle"></i>
@@ -612,10 +578,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 27A -->
+                      <!-- pregunta 7A -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          9A. Monto de la cartera en ejecución por género (USD)
+                          7A. Monto de la cartera en ejecución por género (USD)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
@@ -636,10 +602,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 28 -->
+                      <!-- pregunta 8 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          10. Tipos de riesgos que se administran en su institución
+                          8. Tipos de riesgos que se administran en su institución
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="checkbox">
@@ -682,29 +648,29 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 29 -->
+                      <!-- pregunta 9 -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="risk_increasing_actions">
-                          11. Acciones u omisiones de la institución que podrían incrementar el riesgo de
+                          9. Acciones u omisiones de la institución que podrían incrementar el riesgo de
                           incumplimiento de pagos por parte de los deudores.
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <textarea class="form-control mt-1" rows="3" id="risk_increasing_actions" name="risk_increasing_actions" readonly></textarea>
                         </div>
                       </div>
-                      <!-- pregunta 30 -->
+                      <!-- pregunta 10 -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="risk_mitigating_actions">
-                          12. Acciones que lleva a cabo su institución para mitigar los riesgos de no pago.
+                          10. Acciones que lleva a cabo su institución para mitigar los riesgos de no pago.
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <textarea class="form-control mt-1" rows="3" id="risk_mitigating_actions" name="risk_mitigating_actions" readonly></textarea>
                         </div>
                       </div>
-                      <!-- pregunta 31 -->
+                      <!-- pregunta 11 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          13. Comparte el riesgo de NO pago del C.E.
+                          11. Comparte el riesgo de NO pago del C.E.
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <div class="radio">
@@ -739,68 +705,91 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 32 -->
+                      <!-- pregunta 12 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          14. Número de estudiantes atendidos con Crédito Educativo, por sexo
+                          12. Número de estudiantes atendidos con Crédito Educativo, por género
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12 mt-1">
+                        <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
                           <div class="col-xs-12">
-                            <label class="col-sm-3" for="pregrado_male_students">Masculino (pregrado): </label>
-                            <input class="col-sm-3" type="number" id="pregrado_male_students" name="pregrado_male_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="pregrado_female_students">Femenino (pregrado): </label>
-                            <input class="col-sm-3" type="number" id="pregrado_female_students" name="pregrado_female_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="posgrado_male_students">Masculino (posgrado): </label>
-                            <input class="col-sm-3" type="number" id="posgrado_male_students" name="posgrado_male_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="posgrado_female_students">Femenino (posgrado): </label>
-                            <input class="col-sm-3" type="number" id="posgrado_female_students" name="posgrado_female_students" min="0" readonly>
+                            <div class="col-sm-3">
+                              <label class="col-xs-9" for="pregrado_students">Pregrado</label>
+                              <input class="col-sm-3" type="number" id="pregrado_students" name="pregrado_students" min="0" readonly>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="pregrado_male_students">Masculino (pregrado): </label>
+                                <input class="col-sm-3" type="number" id="pregrado_male_students" name="pregrado_male_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="pregrado_female_students">Femenino (pregrado): </label>
+                                <input class="col-sm-3" type="number" id="pregrado_female_students" name="pregrado_female_students" min="0" readonly>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <label class="col-xs-9" for="posgrado_students">Posgrado</label>
+                              <input class="col-sm-3" type="number" id="posgrado_students" name="posgrado_students" min="0" readonly>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="posgrado_male_students">Masculino (posgrado): </label>
+                                <input class="col-sm-3" type="number" id="posgrado_male_students" name="posgrado_male_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="posgrado_female_students">Femenino (posgrado): </label>
+                                <input class="col-sm-3" type="number" id="posgrado_female_students" name="posgrado_female_students" min="0" readonly>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 33 -->
+                      <!-- pregunta 13 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          15. Número de estudiantes atendidos con Crédito Educativo, de acuerdo con su nivel
+                          13. Número de estudiantes atendidos con Crédito Educativo, de acuerdo con su nivel
                           socioeconómico
+                          <span id="tooltip" class="tool" data-tip="La sumatoria del número de beneficiarios (4.2) de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                                tabindex="1">
+                            <i class="fa fa-question-circle"></i>
+                          </span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12 mt-1">
+                        <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
                           <div class="col-xs-12">
-                            <label class="col-sm-3" for="pregrado_high_students">Alto (pregrado): </label>
-                            <input class="col-sm-3" type="number" id="pregrado_high_students" name="pregrado_high_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="pregrado_medium_students">Medio (pregrado): </label>
-                            <input class="col-sm-3" type="number" id="pregrado_medium_students" name="pregrado_medium_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="pregrado_low_students">Bajo (pregrado): </label>
-                            <input class="col-sm-3" type="number" id="pregrado_low_students" name="pregrado_low_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="posgrado_high_students">Alto (posgrado): </label>
-                            <input class="col-sm-3" type="number" id="posgrado_high_students" name="posgrado_high_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="posgrado_medium_students">Medio (posgrado): </label>
-                            <input class="col-sm-3" type="number" id="posgrado_medium_students" name="posgrado_medium_students" min="0" readonly>
-                          </div>
-                          <div class="col-xs-12">
-                            <label class="col-sm-3" for="posgrado_low_students">Bajo (posgrado): </label>
-                            <input class="col-sm-3" type="number" id="posgrado_low_students" name="posgrado_low_students" min="0" readonly>
+                            <div class="col-sm-3">
+                              <label class="col-xs-9" for="pregrado_students_economic">Pregrado</label>
+                              <input class="col-sm-3" type="number" id="pregrado_students_economic" name="pregrado_students_economic" min="0" readonly>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="pregrado_high_students">Alto (pregrado): </label>
+                                <input class="col-sm-3" type="number" id="pregrado_high_students" name="pregrado_high_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="pregrado_medium_students">Medio (pregrado): </label>
+                                <input class="col-sm-3" type="number" id="pregrado_medium_students" name="pregrado_medium_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="pregrado_low_students">Bajo (pregrado): </label>
+                                <input class="col-sm-3" type="number" id="pregrado_low_students" name="pregrado_low_students" min="0" readonly>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <label class="col-xs-9" for="posgrado_students_economic">Posgrado</label>
+                              <input class="col-sm-3" type="number" id="posgrado_students_economic" name="posgrado_students_economic" min="0" readonly>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="posgrado_high_students">Alto (posgrado): </label>
+                                <input class="col-sm-3" type="number" id="posgrado_high_students" name="posgrado_high_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="posgrado_medium_students">Medio (posgrado): </label>
+                                <input class="col-sm-3" type="number" id="posgrado_medium_students" name="posgrado_medium_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12">
+                                <label class="col-sm-9" for="posgrado_low_students">Bajo (posgrado): </label>
+                                <input class="col-sm-3" type="number" id="posgrado_low_students" name="posgrado_low_students" min="0" readonly>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 34 -->
+                      <!-- pregunta 14 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          16. Porcentaje de graduación de beneficiarios de C.E. de pregrado, de la(s) cohorte(s)
-                          que debería(n) graduarse en el año que se está reportando
+                          14. N° de beneficiarios de C.E. que se graduaron en el año que se está reportando
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 mt-1">
                           <div class="col-xs-12">
@@ -813,10 +802,10 @@
                           </div>
                         </div>
                       </div>
-                      <!-- pregunta 35 -->
+                      <!-- pregunta 15 -->
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
-                          17. La institución ofrece beneficios o estímulos para favorecer
+                          15. La institución ofrece beneficios o estímulos para favorecer
                           la graduación de los beneficiarios
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
@@ -977,6 +966,10 @@
         $("#total_students").val("{{report.total_students}}");
       {{/if}}
 
+      {{#if report.total_students_year_since}}
+        $("#total_students_year_since").val("{{report.total_students_year_since}}");
+      {{/if}}
+
       {{#each report.current_portfolio as |obj|}}
         $("#current_portfolio_{{obj.name}}").attr("checked", true);
         $("#current_portfolio_{{obj.name}}_amount").val("{{obj.amount}}");
@@ -1080,6 +1073,14 @@
         {{/if}}
       {{/if}}
 
+      {{#if report.pregrado_students}}
+        $("#pregrado_students").val("{{report.pregrado_students}}");
+      {{/if}}
+
+      {{#if report.posgrado_students}}
+        $("#posgrado_students").val("{{report.posgrado_students}}");
+      {{/if}}
+
       {{#if report.pregrado_male_students}}
         $("#pregrado_male_students").val("{{report.pregrado_male_students}}");
       {{/if}}
@@ -1094,6 +1095,14 @@
 
       {{#if report.posgrado_female_students}}
         $("#posgrado_female_students").val("{{report.posgrado_female_students}}");
+      {{/if}}
+
+      {{#if report.pregrado_students_economic}}
+        $("#pregrado_students_economic").val("{{report.pregrado_students_economic}}");
+      {{/if}}
+
+      {{#if report.posgrado_students_economic}}
+        $("#posgrado_students_economic").val("{{report.posgrado_students_economic}}");
       {{/if}}
 
       {{#if report.pregrado_high_students}}
@@ -1265,7 +1274,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="${'program'+i+'_term'}">
-                    3. Plazo (en años)
+                    3. Plazo (en meses)
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                     <input type="number" id="${'program'+i+'_term'}" name="${'program'+i+'_term'}" class="mt-1"
@@ -1341,7 +1350,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="${'program'+i+'_grace'}">
-                    7. Periodo de gracia (años)
+                    7. Periodo de gracia (meses)
                     <span id="tooltip" class="tool" data-tip="Se refiere al tiempo que tiene el beneficiario entre la finalización del desembolso del crédito y comenzar el repago."
                                 tabindex="1">
                       <i class="fa fa-question-circle"></i>
