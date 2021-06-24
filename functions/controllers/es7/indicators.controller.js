@@ -1,6 +1,7 @@
 const admin = require('firebase-admin');
 const db = admin.firestore();
 const underscore = require('underscore');
+const appSettings = require('../../utils/es7/appSettingsService');
 
 
 exports.listIndicators = (req, res) => {
@@ -9,8 +10,9 @@ exports.listIndicators = (req, res) => {
   return res.render('select-report', data);
 };
 
-exports.getIndicator = (req, res) => {
+exports.getIndicator = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
+  data.can_visualize = await appSettings.canVisualize();
   data.selected_report = req.body.report;
   data.from_year = req.body.from_year;
   data.to_year = req.body.to_year;

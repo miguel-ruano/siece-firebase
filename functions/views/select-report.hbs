@@ -83,6 +83,11 @@
                       <a href="admin"><i class="fa fa-pencil"></i> Administrador</a>
                     </li>
                   {{/if}}
+                  {{#if is_admin}}
+                  <li>
+                      <a href="settings"><i class="fa fa-gear"></i> Configuraciones</a>
+                  </li>
+                  {{/if}}
                 </ul>
               </div>
             </div>
@@ -157,6 +162,7 @@
                     {{error}}
                   </div>
                 {{/if}}
+                {{#ifCond can_visualize '||' is_admin}}
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Seleccionar un Indicador para visualizar</h2>
@@ -214,9 +220,9 @@
                         </label>
                         <div class="col-xs-12">
                           <label for="from_year">Desde: </label>
-                          <input type="number" id="from_year" maxlength="4" minlength="4" min="1950" max="2018" name="from_year" required>
+                          <input type="number" id="from_year" maxlength="4" minlength="4" min="{{min_year}}" max="{{max_year}}" name="from_year" required>
                           <label for="to_year">Hasta: </label>
-                          <input type="number" id="to_year" maxlength="4" minlength="4" min="1950" max="2018" name="to_year" required>
+                          <input type="number" id="to_year" maxlength="4" minlength="4" min="{{min_year}}" max="{{max_year}}" name="to_year" required>
                         </div>
                       </div>
                       <div id="sources_container" class="form-group" hidden>
@@ -282,6 +288,7 @@
                     </form>
                   </div>
                 </div>
+                {{/ifCond}}
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">

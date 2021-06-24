@@ -17,6 +17,7 @@ const formController = require('./controllers/es7/form.controller');
 const profileController = require('./controllers/es7/profile.controller');
 const indicatorsController = require('./controllers/es7/indicators.controller');
 const adminController = require('./controllers/es7/admin.controller');
+const settingsController = require('./controllers/es7/settings.controller');
 
 
 module.exports = (app) => {
@@ -178,6 +179,26 @@ module.exports = (app) => {
     if (req.user)
       if (req.is_admin)
         return adminController.acceptOrDeclineReport(req, res);
+      else
+        return res.redirect('/index');
+    else
+      return res.redirect('/login');
+  });
+
+  app.get('/settings',(req,res) =>{
+    if (req.user)
+      if (req.is_admin)
+        return settingsController.getSettings(req, res);
+      else
+        return res.redirect('/index');
+    else
+      return res.redirect('/login');
+  });
+
+  app.post('/settings',(req,res) =>{
+    if (req.user)
+      if (req.is_admin)
+        return settingsController.updateSettings(req, res);
       else
         return res.redirect('/index');
     else

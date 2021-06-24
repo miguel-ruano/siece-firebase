@@ -1,19 +1,16 @@
 const countries = require('i18n-iso-countries');
 const admin = require('firebase-admin');
 const db = admin.firestore();
+const appSettings = require('../../utils/es7/appSettingsService');
+
 
 
 exports.getIndex = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
-  const reportedYear = req.query.year && !isNaN(parseInt(req.query.year)) ? parseInt(req.query.year) : new Date().getUTCFullYear() - 1;
-  data.reported_year = reportedYear;
-  data.available_years = [];
-  let startYear = 2015;
-  let endYear = (new Date()).getFullYear() - 1;
-  for(let i=startYear; i<=endYear; i++){
-    data.available_years.push(i.toString())
-  }
-  console.log(data.available_years);
+  const reportedYear = req.query.year && !isNaN(parseInt(req.query.year)) ? parseInt(req.query.year) : new Date().getFullYear();
+  data.reported_year = `${reportedYear}`;
+  data.can_visualize = await appSettings.canVisualize();
+  data.available_years = await appSettings.getAvailableYears();
   try {
     const querySnapshot = await db.collection('reports')
       .where('reported_year', '==', reportedYear)
@@ -69,39 +66,16 @@ const topStatistics = (reports, data) => {
     if (reports[i].programs) {
       for (let j = 0; j < reports[i].programs.length; j++) {
         // console.log(reports[i].programs[j].beneficiaries)
-        // if (reports[i].programs[j].beneficiaries){
-        //   totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
-        // }
+        if (reports[i].programs[j].beneficiaries){
+          totalBeneficiaries += Number(reports[i].programs[j].beneficiaries);
+        }
         if (reports[i].programs[j].investment){
           totalInvestment += Number(reports[i].programs[j].investment);
         }
       }
-      console.log("reports["+i+"].pregrado_female_students")
-      console.log(reports[i].pregrado_female_students)
-      if (reports[i].pregrado_female_students){
-        totalBeneficiaries += Number(reports[i].pregrado_female_students);
-        totalFemale += Number(reports[i].pregrado_female_students);
-      }
-      console.log("reports["+i+"].posgrado_female_students")
-      console.log(reports[i].posgrado_female_students)
-      if (reports[i].posgrado_female_students){
-        totalBeneficiaries += Number(reports[i].posgrado_female_students);
-        totalFemale += Number(reports[i].posgrado_female_students);
-      }
-      if (reports[i].pregrado_male_students){
-        totalBeneficiaries += Number(reports[i].pregrado_male_students);
-        totalMale += Number(reports[i].pregrado_male_students);
-      }
-      if (reports[i].posgrado_male_students){
-        totalBeneficiaries += Number(reports[i].posgrado_male_students);
-        totalMale += Number(reports[i].posgrado_male_students);
-      }
     }
   }
   data.total_beneficiaries = totalBeneficiaries;
-  console.log("----------------data.total_beneficiaries---------------------")
-  console.log(data.total_beneficiaries)
-  console.log(totalFemale)
   if (totalBeneficiaries > 0) {
     data.percentage_female = (totalFemale / totalBeneficiaries * 100).toFixed(2);
     data.percentage_male = (totalMale / totalBeneficiaries * 100).toFixed(2);

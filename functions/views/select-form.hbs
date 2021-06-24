@@ -81,6 +81,11 @@
                       <a href="admin"><i class="fa fa-pencil"></i> Administrador</a>
                     </li>
                   {{/if}}
+                  {{#if is_admin}}
+                  <li>
+                      <a href="settings"><i class="fa fa-gear"></i> Configuraciones</a>
+                  </li>
+                  {{/if}}
                 </ul>
               </div>
             </div>
@@ -127,6 +132,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
+        {{#ifCond can_report '||' is_admin}}
         <div class="right_col" role="main">
           <div class="">
             <div class="row">
@@ -158,8 +164,8 @@
                           Año a Reportar
                         </label>
                         <div class="col-xs-6">
-                          <input type="number" id="name" name="reported_year" class="form-control" min="1995"
-                                 max="{{reported_year}}" maxlength="4" minlength="4" required>
+                          <input type="number" id="name" name="reported_year" class="form-control" min="{{min_year}}"
+                                 max="{{max_year}}" maxlength="4" minlength="4" required>
                         </div>
                       </div>
                       <div class="form-group">
@@ -212,6 +218,7 @@
             </div>
           </div>
         </div>
+        {{/ifCond}}
         <!-- /page content -->
 
         <!-- footer content -->

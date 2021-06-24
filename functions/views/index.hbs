@@ -85,6 +85,11 @@
                       <a href="admin"><i class="fa fa-pencil"></i> Administrador</a>
                     </li>
                   {{/if}}
+                  {{#if is_admin}}
+                  <li>
+                      <a href="settings"><i class="fa fa-gear"></i> Configuraciones</a>
+                  </li>
+                  {{/if}}
                 </ul>
               </div>
             </div>
@@ -139,6 +144,7 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
+          {{#ifCond can_visualize '||' is_admin}}
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <h4 class="count_top"><i class="fa fa-calendar"></i> Año Reportado</h4>
@@ -286,6 +292,7 @@
 
           </div>
           <br />
+          {{/ifCond}}
 
           <div class="row">
 
