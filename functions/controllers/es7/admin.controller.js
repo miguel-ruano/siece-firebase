@@ -14,6 +14,7 @@ exports.getReports = async (req, res) => {
   if (formData.reported_year)
     reportedYear = Number(formData.reported_year);
   data.reported_year = reportedYear;
+  data.current_year = new Date().getUTCFullYear();
 
   try {
     const reportsSnapshot = await db.collection('reports')

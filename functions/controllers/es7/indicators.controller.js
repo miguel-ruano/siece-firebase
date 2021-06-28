@@ -13,11 +13,18 @@ exports.listIndicators = (req, res) => {
 exports.getIndicator = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
   data.can_visualize = await appSettings.canVisualize();
+  let available_years = await appSettings.getAvailableYears();
   data.selected_report = req.body.report;
   data.from_year = req.body.from_year;
   data.to_year = req.body.to_year;
-
+  data.min_year = available_years[0]
+  data.max_year = available_years[available_years.length - 1]
+  console.log(req.body.report);
   switch (req.body.report) {
+    case 'porcentaje_graduados': {
+      data.indicator_name = 'Porcentaje de graduación de beneficiarios de C.E. de pregrado, de la(s) cohorte(s) que debería(n) graduarse en el año que se está reportando';
+      return porcentajeGraduados(req, res, data);
+    }
     case 'financiamiento_anual': {
       data.indicator_name = 'Monto promedio de crédito educativo por año';
       return financiamientoAnual(req, res, data);
@@ -116,6 +123,86 @@ exports.getIndicator = async (req, res) => {
     }
   }
 };
+
+const porcentajeGraduados = async (req, res, data) => {
+  const formData = req.body;
+  const source = formData.source;
+  const years = formData.to_year - formData.from_year + 1;
+  if (years >= 0 && years <= 10) {
+    try {
+      const reportsSnapshot = await db.collection('reports')
+        .where('status', '==', 'Aceptado')
+        .where('reported_year', '>=', Number(formData.from_year))
+        .where('reported_year', '<=', Number(formData.to_year))
+        .get();
+      if (reportsSnapshot.empty) {
+        console.log('No documents found.');
+        data.warning = 'No hay datos reportados en el periodo seleccionado.';
+      } else {
+        let reports = reportsSnapshot.docs.map(doc => doc.data());
+        // console.log(reports);
+        let userCache = {};
+        let results = [];
+        for (let i = formData.from_year; i <= formData.to_year; i++) {
+          let result = { reported_year: Number(i) };
+          results.push(result);
+        }
+
+        const additionalColumns = [
+          { name: 'Total Beneficiarios', format: 'number'},
+          { name: 'Total Graduados', format: 'number'}
+        ];
+
+        for (let i = 0; i < reports.length; i++) {
+          let total_beneficiaries = 0;
+          let pregrado_graduate = !isNaN(Number(reports[i].pregrado_graduate_percentage)) ? Number(reports[i].pregrado_graduate_percentage) : 0;
+          let posgrado_graduate = !isNaN(Number(reports[i].posgrado_graduate_percentage)) ? Number(reports[i].posgrado_graduate_percentage) : 0;
+          let total_graduate = pregrado_graduate + posgrado_graduate
+          if (reports[i].programs && reports[i].programs instanceof Array) {
+            for (let j = 0; j < reports[i].programs.length; j++) {
+              const program = reports[i].programs[j];
+              if (program.beneficiaries) {
+                total_beneficiaries += !isNaN(Number(program.beneficiaries))? Number(program.beneficiaries) : 0;
+              }
+            }
+          }
+           
+          let indicatorValue = (total_graduate / total_beneficiaries)*100;
+          if (indicatorValue) {
+            // console.log(indicatorValue);
+            indicatorValue = indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, total_graduate, total_beneficiaries];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, total_graduate, total_beneficiaries];
+            }
+          }
+        }
+
+        let institutionNames = [];
+        Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
+
+        data.line_chart_results = results;
+        data.table_results = tableResults(results, institutionNames, 3); // length of additional columns + indicator
+        data.institution_names = underscore.sample(institutionNames, 5);
+        data.type = 'percentage';
+        data.additional_columns = additionalColumns;
+        // console.log(data.line_chart_results, data.table_results);
+      }
+      return res.render('select-report', data);
+    } catch(error) {
+      console.log('Error: ', error);
+      data.error = 'No se han podido recuperar los datos de la institución. Contacte al administrador.';
+      return res.render('select-report', data);
+    }
+  } else {
+    data.error = 'Rango de años invalido. (0 <= rango <= 10)';
+    return res.render('select-report', data);
+  }
+};
+
 
 const financiamientoAnual = async (req, res, data) => {
   const formData = req.body;
