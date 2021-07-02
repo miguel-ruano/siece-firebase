@@ -59,6 +59,10 @@ exports.getReports = async (req, res) => {
 
 exports.createReport = async (req, res) => {
   let data = { user: req.user };
+  let available_years = await appSettings.getAvailableYears();
+  data.can_report = await appSettings.canReport();
+  data.min_year = available_years[0]
+  data.max_year = available_years[available_years.length - 1]
   const formData = req.body;
   const usersSnapshot = await db.collection('users')
     .where('user_id', '==', req.user.uid)
@@ -122,6 +126,10 @@ exports.createReport = async (req, res) => {
 
 exports.getReport = async (req, res) => {
   let data = { user: req.user };
+  let available_years = await appSettings.getAvailableYears();
+  data.can_report = await appSettings.canReport();
+  data.min_year = available_years[0]
+  data.max_year = available_years[available_years.length - 1]
   data.can_report = await appSettings.canReport();
   const reportsSnapshot = await db.collection('reports')
     .where('user_id', '==', req.user.uid)
@@ -149,6 +157,10 @@ exports.getReport = async (req, res) => {
 exports.processReport = async (req, res) => {
   // console.log(req.body);
   let data = { user: req.user };
+  let available_years = await appSettings.getAvailableYears();
+  data.can_report = await appSettings.canReport();
+  data.min_year = available_years[0];
+  data.max_year = available_years[available_years.length - 1];
   const formData = req.body;
   const reportsSnapshot = await db.collection('reports')
     .where('user_id', '==', req.user.uid)

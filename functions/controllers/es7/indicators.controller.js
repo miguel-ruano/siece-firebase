@@ -4,8 +4,12 @@ const underscore = require('underscore');
 const appSettings = require('../../utils/es7/appSettingsService');
 
 
-exports.listIndicators = (req, res) => {
+exports.listIndicators = async (req, res) => {
   let data = { user: req.user, is_admin: req.is_admin };
+  data.can_visualize = await appSettings.canVisualize();
+  let available_years = await appSettings.getAvailableYears();
+  data.min_year = available_years[0]
+  data.max_year = available_years[available_years.length - 1]
 
   return res.render('select-report', data);
 };
@@ -18,8 +22,7 @@ exports.getIndicator = async (req, res) => {
   data.from_year = req.body.from_year;
   data.to_year = req.body.to_year;
   data.min_year = available_years[0]
-  data.max_year = available_years[available_years.length - 1]
-  console.log(req.body.report);
+  data.max_year = available_years[available_years.length - 1];
   switch (req.body.report) {
     case 'porcentaje_graduados': {
       data.indicator_name = 'Porcentaje de graduación de beneficiarios de C.E. de pregrado, de la(s) cohorte(s) que debería(n) graduarse en el año que se está reportando';
