@@ -357,7 +357,7 @@
                           </select>
                         </div>
                       </div>
-                      <!-- programas (preguntas  4.1 - 4.10A) -->
+                      <!-- programas (preguntas  2.1 - 2.10A) -->
                       <div id="programs_container">
                       </div>
                       <!-- pregunta 3 -->
@@ -378,7 +378,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_students">
                           4. Número total de estudiantes, con Crédito Educativo, atendidos por la institución
-                          desde su fundación o desde el año que se reporta
+                          desde su fundación o desde el año en que el programa registra datos
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
@@ -576,7 +576,8 @@
                             </label>
                             <div class="col-xs-12 col-sm-8">
                               <label for="execution_portfolio_pregrado_pais_amount">USD</label>
-                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_pregrado_pais_amount" name="execution_portfolio_amounts" min="0">
+                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_pregrado_pais_amount" name="execution_portfolio_amounts" min="0"
+                                     data-parsley-execution-portfolio>
                             </div>
                           </div>
                           <div class="checkbox col-xs-12">
@@ -586,7 +587,8 @@
                             </label>
                             <div class="col-xs-12 col-sm-8">
                               <label for="execution_portfolio_pregrado_exterior_amount">USD</label>
-                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_pregrado_exterior_amount" name="execution_portfolio_amounts" min="0">
+                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_pregrado_exterior_amount" name="execution_portfolio_amounts" min="0"
+                                     data-parsley-execution-portfolio>
                             </div>
                           </div>
                           <div class="checkbox col-xs-12">
@@ -596,7 +598,8 @@
                             </label>
                             <div class="col-xs-12 col-sm-8">
                               <label for="execution_portfolio_posgrado_pais_amount">USD</label>
-                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_posgrado_pais_amount" name="execution_portfolio_amounts" min="0">
+                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_posgrado_pais_amount" name="execution_portfolio_amounts" min="0"
+                                     data-parsley-execution-portfolio>
                             </div>
                           </div>
                           <div class="checkbox col-xs-12">
@@ -606,7 +609,8 @@
                             </label>
                             <div class="col-xs-12 col-sm-8">
                               <label for="execution_portfolio_posgrado_exterior_amount">USD</label>
-                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_posgrado_exterior_amount" name="execution_portfolio_amounts" min="0">
+                              <input class="autonumeric" type="text" step="0.001" disabled id="execution_portfolio_posgrado_exterior_amount" name="execution_portfolio_amounts" min="0"
+                                     data-parsley-execution-portfolio>
                             </div>
                           </div>
                         </div>
@@ -619,19 +623,23 @@
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
                             <label class="col-sm-3" for="execution_portfolio_pregrado_male">Masculino (pregrado): </label>
-                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_pregrado_male" name="execution_portfolio_pregrado_male" min="0">
+                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_pregrado_male" name="execution_portfolio_pregrado_male" min="0"
+                                     data-parsley-execution-portfolio>
                           </div>
                           <div class="col-xs-12">
                             <label class="col-sm-3" for="execution_portfolio_pregrado_female">Femenino (pregrado): </label>
-                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_pregrado_female" name="execution_portfolio_pregrado_female" min="0">
+                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_pregrado_female" name="execution_portfolio_pregrado_female" min="0"
+                                     data-parsley-execution-portfolio>
                           </div>
                           <div class="col-xs-12">
                             <label class="col-sm-3" for="execution_portfolio_posgrado_male">Masculino (posgrado): </label>
-                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_posgrado_male" name="execution_portfolio_posgrado_male" min="0">
+                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_posgrado_male" name="execution_portfolio_posgrado_male" min="0"
+                                     data-parsley-execution-portfolio>
                           </div>
                           <div class="col-xs-12">
                             <label class="col-sm-3" for="execution_portfolio_posgrado_female">Femenino (posgrado): </label>
-                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_posgrado_female" name="execution_portfolio_posgrado_female" min="0">
+                            <input class="autonumeric col-sm-3" type="text" step="0.001" id="execution_portfolio_posgrado_female" name="execution_portfolio_posgrado_female" min="0"
+                                     data-parsley-execution-portfolio>
                           </div>
                         </div>
                       </div>
@@ -750,25 +758,29 @@
                         <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
                           <div class="col-xs-12">
                             <div class="col-sm-3">
-                              <label class="col-xs-9" for="pregrado_students">Pregrado</label>
-                              <input class="autonumeric col-sm-3" type="text" id="pregrado_students" name="pregrado_students" min="0">
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
+                                <label class="col-xs-9" for="pregrado_students">Pregrado</label>
+                                <input class="autonumeric col-sm-3" type="text" id="pregrado_students" name="pregrado_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="pregrado_male_students">Masculino (pregrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="pregrado_male_students" name="pregrado_male_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="pregrado_female_students">Femenino (pregrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="pregrado_female_students" name="pregrado_female_students" min="0">
                               </div>
                             </div>
                             <div class="col-sm-3">
-                              <label class="col-xs-9" for="posgrado_students">Posgrado</label>
-                              <input class="autonumeric col-sm-3" type="text" id="posgrado_students" name="posgrado_students" min="0">
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
+                                <label class="col-xs-9" for="posgrado_students">Posgrado</label>
+                                <input class="autonumeric col-sm-3" type="text" id="posgrado_students" name="posgrado_students" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="posgrado_male_students">Masculino (posgrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="posgrado_male_students" name="posgrado_male_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="posgrado_female_students">Femenino (posgrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="posgrado_female_students" name="posgrado_female_students" min="0">
                               </div>
@@ -781,7 +793,7 @@
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
                           13. Número de estudiantes atendidos con Crédito Educativo, de acuerdo con su nivel
                           socioeconómico
-                          <span id="tooltip" class="tool" data-tip="La sumatoria del número de beneficiarios (4.2) de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                          <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
                                 tabindex="1">
                             <i class="fa fa-question-circle"></i>
                           </span>
@@ -789,33 +801,37 @@
                         <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
                           <div class="col-xs-12">
                             <div class="col-sm-3">
-                              <label class="col-xs-9" for="pregrado_students_economic">Pregrado</label>
-                              <input class="autonumeric col-sm-3" type="text" id="pregrado_students_economic" name="pregrado_students_economic" min="0">
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
+                                <label class="col-xs-9" for="pregrado_students_economic">Pregrado</label>
+                                <input class="autonumeric col-sm-3" type="text" id="pregrado_students_economic" name="pregrado_students_economic" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="pregrado_high_students">Alto (pregrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="pregrado_high_students" name="pregrado_high_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="pregrado_medium_students">Medio (pregrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="pregrado_medium_students" name="pregrado_medium_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="pregrado_low_students">Bajo (pregrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="pregrado_low_students" name="pregrado_low_students" min="0">
                               </div>
                             </div>
                             <div class="col-sm-3">
-                              <label class="col-xs-9" for="posgrado_students_economic">Posgrado</label>
-                              <input class="autonumeric col-sm-3" type="text" id="posgrado_students_economic" name="posgrado_students_economic" min="0">
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
+                                <label class="col-xs-9" for="posgrado_students_economic">Posgrado</label>
+                                <input class="autonumeric col-sm-3" type="text" id="posgrado_students_economic" name="posgrado_students_economic" min="0" readonly>
+                              </div>
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="posgrado_high_students">Alto (posgrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="posgrado_high_students" name="posgrado_high_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="posgrado_medium_students">Medio (posgrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="posgrado_medium_students" name="posgrado_medium_students" min="0">
                               </div>
-                              <div class="col-xs-12">
+                              <div class="col-xs-12 mt-1">
                                 <label class="col-sm-9" for="posgrado_low_students">Bajo (posgrado): </label>
                                 <input class="autonumeric col-sm-3" type="text" id="posgrado_low_students" name="posgrado_low_students" min="0">
                               </div>
@@ -829,11 +845,11 @@
                           14. N° de beneficiarios de C.E. que se graduaron en el año que se está reportando
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 mt-1">
-                          <div class="col-xs-12">
+                          <div class="col-xs-12 mt-1">
                             <label class="col-sm-3" for="pregrado_graduate_percentage">Pregrado: </label>
                             <input class="autonumeric col-sm-3" type="text" id="pregrado_graduate_percentage" name="pregrado_graduate_percentage" min="0" step="0.1" max="100">
                           </div>
-                          <div class="col-xs-12">
+                          <div class="col-xs-12 mt-1">
                             <label class="col-sm-3" for="posgrado_graduate_percentage">Posgrado: </label>
                             <input class="autonumeric col-sm-3" type="text" id="posgrado_graduate_percentage" name="posgrado_graduate_percentage" min="0" step="0.1" max="100">
                           </div>
@@ -1392,10 +1408,11 @@
     });
   </script>
 	<script type="text/javascript">
+    let pregrado_beneficiaries = 0;
+    let posgrado_beneficiaries = 0;
     function changePanelsQuantity(value) {
       // console.log(value);
       let container = $("#programs_container");
-
       let current_quantity = container.children().length;
       // console.log(current_quantity);
       let target_quantity = value - current_quantity;
@@ -1443,6 +1460,9 @@
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="${'program'+i+'_beneficiaries'}">
                     2. Número de beneficiarios por año
+                    <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                          tabindex="1">
+                      <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                     <input type="text" id="${'program'+i+'_beneficiaries'}" name="${'program'+i+'_beneficiaries'}" class="autonumeric mt-1"
@@ -1643,6 +1663,20 @@
             </div>
           `;
           container.append(html);
+        // autofill 12 and 13 questions according 2.2 
+          $("#program"+i+"_beneficiaries").change(function(){
+            if ($("#program"+i+"_level_pregrado").is(':checked')){
+              pregrado_beneficiaries = pregrado_beneficiaries + Number($("#program"+i+"_beneficiaries").val());
+              $("#pregrado_students").val(pregrado_beneficiaries);
+              $("#pregrado_students_economic").val(pregrado_beneficiaries);
+            }else{
+              if ($("#program"+i+"_level_posgrado").is(':checked')){
+                posgrado_beneficiaries = posgrado_beneficiaries + Number($("#program"+i+"_beneficiaries").val());
+                $("#posgrado_students").val(posgrado_beneficiaries);
+                $("#posgrado_students_economic").val(posgrado_beneficiaries);
+              } 
+            }
+          });
         }
         // autonumeric
         $(".autonumeric").attr("pattern", "[0-9]+([\.][0-9]+)?");
@@ -1693,7 +1727,7 @@
         return validateTotalCurrentPortfolio();
       },
       messages: {
-        es: 'Los totales de las preguntas 7 y 7A deben coincidir'
+        es: 'Los totales de las preguntas 5 y 5A deben coincidir'
       }
     });
 
@@ -1716,7 +1750,30 @@
         return validateTotalPastduePortfolio();
       },
       messages: {
-        es: 'Los totales de las preguntas 8 y 8A deben coincidir'
+        es: 'Los totales de las preguntas 6 y 6A deben coincidir'
+      }
+    });
+
+    function validateTotalExecutionPortfolio() {
+      let total1 = Number($("#execution_portfolio_pregrado_pais_amount").val()) +
+              Number($("#execution_portfolio_pregrado_exterior_amount").val()) +
+              Number($("#execution_portfolio_posgrado_pais_amount").val()) +
+              Number($("#execution_portfolio_posgrado_exterior_amount").val());
+      let total2 = Number($("#execution_portfolio_pregrado_female").val()) +
+              Number($("#execution_portfolio_pregrado_male").val()) +
+              Number($("#execution_portfolio_posgrado_female").val()) +
+              Number($("#execution_portfolio_posgrado_male").val());
+
+      //console.log(total1 + " - " + total2);
+      return total1 === total2;
+    }
+
+    window.Parsley.addValidator('executionPortfolio', {
+      validateNumber: function() {
+        return validateTotalExecutionPortfolio();
+      },
+      messages: {
+        es: 'Los totales de las preguntas 7 y 7A deben coincidir'
       }
     });
   </script>

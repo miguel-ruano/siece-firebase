@@ -25,7 +25,7 @@ exports.getIndicator = async (req, res) => {
   data.max_year = available_years[available_years.length - 1];
   switch (req.body.report) {
     case 'porcentaje_graduados': {
-      data.indicator_name = 'Porcentaje de graduación de beneficiarios de C.E. de pregrado, de la(s) cohorte(s) que debería(n) graduarse en el año que se está reportando';
+      data.indicator_name = 'Porcentaje de graduación de beneficiarios de C.E. de pregrado, que debería(n) graduarse en el año que se está reportando';
       return porcentajeGraduados(req, res, data);
     }
     case 'financiamiento_anual': {
@@ -153,14 +153,12 @@ const porcentajeGraduados = async (req, res, data) => {
 
         const additionalColumns = [
           { name: 'Total Beneficiarios', format: 'number'},
-          { name: 'Total Graduados', format: 'number'}
+          { name: 'Total Graduados (pregrado)', format: 'number'}
         ];
 
         for (let i = 0; i < reports.length; i++) {
           let total_beneficiaries = 0;
           let pregrado_graduate = !isNaN(Number(reports[i].pregrado_graduate_percentage)) ? Number(reports[i].pregrado_graduate_percentage) : 0;
-          let posgrado_graduate = !isNaN(Number(reports[i].posgrado_graduate_percentage)) ? Number(reports[i].posgrado_graduate_percentage) : 0;
-          let total_graduate = pregrado_graduate + posgrado_graduate
           if (reports[i].programs && reports[i].programs instanceof Array) {
             for (let j = 0; j < reports[i].programs.length; j++) {
               const program = reports[i].programs[j];
@@ -170,7 +168,7 @@ const porcentajeGraduados = async (req, res, data) => {
             }
           }
            
-          let indicatorValue = (total_graduate / total_beneficiaries)*100;
+          let indicatorValue = (pregrado_graduate / total_beneficiaries)*100;
           if (indicatorValue) {
             // console.log(indicatorValue);
             indicatorValue = indicatorValue.toFixed(2);
@@ -1828,11 +1826,11 @@ const carteraVencida = async (req, res, data) => {
               pastdue_portfolio += Number(reports[i].pastdue_portfolio[j].amount);
             }
           }
-          if (reports[i].execution_portfolio && reports[i].execution_portfolio instanceof Array) {
-            for (let j = 0; j < reports[i].execution_portfolio.length; j++) {
-              total_portfolio += Number(reports[i].execution_portfolio[j].amount);
-            }
-          }
+          // if (reports[i].execution_portfolio && reports[i].execution_portfolio instanceof Array) {
+          //   for (let j = 0; j < reports[i].execution_portfolio.length; j++) {
+          //     total_portfolio += Number(reports[i].execution_portfolio[j].amount);
+          //   }
+          // }
 
           let indicatorValue = pastdue_portfolio / total_portfolio * 100;
           if (indicatorValue) {

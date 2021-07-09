@@ -346,7 +346,7 @@
                           </select>
                         </div>
                       </div>
-                      <!-- programas (preguntas 4.1 - 4.10A) -->
+                      <!-- programas (preguntas 2.1 - 2.10A) -->
                       <div id="programs_container">
                       </div>
                       <!-- pregunta 3 -->
@@ -367,7 +367,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_students">
                           4. Número total de estudiantes, con Crédito Educativo, atendidos por la institución
-                          desde su fundación o desde el año que se reporta
+                          desde su fundación o desde el año en que el programa registra datos
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12 pt">
                           <div class="col-xs-12">
@@ -714,6 +714,9 @@
                       <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
                           12. Número de estudiantes atendidos con Crédito Educativo, por género
+                          <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                                tabindex="1">
+                            <i class="fa fa-question-circle"></i>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12 mt-1">
                           <div class="col-xs-12">
@@ -749,7 +752,7 @@
                         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
                           13. Número de estudiantes atendidos con Crédito Educativo, de acuerdo con su nivel
                           socioeconómico
-                          <span id="tooltip" class="tool" data-tip="La sumatoria del número de beneficiarios (4.2) de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                          <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
                                 tabindex="1">
                             <i class="fa fa-question-circle"></i>
                           </span>
@@ -1271,6 +1274,10 @@
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="${'program'+i+'_beneficiaries'}">
                     2. Número de beneficiarios por año
+                    <span id="tooltip" class="tool" data-tip="La suma del número de beneficiarios de cada programa debe coincidir con los datos reportados en la pregunta 12 y en la 13, en pregrado y posgrado."
+                          tabindex="1">
+                      <i class="fa fa-question-circle"></i>
+                    </span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                     <input type="number" id="${'program'+i+'_beneficiaries'}" name="${'program'+i+'_beneficiaries'}" class="mt-1"
