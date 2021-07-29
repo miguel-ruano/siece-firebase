@@ -353,14 +353,6 @@ exports.processReport = async (req, res) => {
           report.non_payment_risk = non_payment_risk;
         }
 
-        if (formData.pregrado_students) {
-          report.pregrado_students = Number(formData.pregrado_students);
-        }
-
-        if (formData.posgrado_students) {
-          report.posgrado_students = Number(formData.posgrado_students);
-        }
-
         if (formData.pregrado_male_students) {
           report.pregrado_male_students = Number(formData.pregrado_male_students);
         }
@@ -375,14 +367,6 @@ exports.processReport = async (req, res) => {
 
         if (formData.posgrado_female_students) {
           report.posgrado_female_students = Number(formData.posgrado_female_students);
-        }
-
-        if (formData.pregrado_students_economic) {
-          report.pregrado_students_economic = Number(formData.pregrado_students_economic);
-        }
-
-        if (formData.posgrado_students_economic) {
-          report.posgrado_students_economic = Number(formData.posgrado_students_economic);
         }
 
         if (formData.pregrado_high_students) {
@@ -435,6 +419,8 @@ exports.processReport = async (req, res) => {
 
         // programs
         let programs = [];
+        let beneficiaries_pregrado = 0;
+        let beneficiaries_posgrado = 0;
         for (let i = 1; i <= formData.program_quantity; i++) {
           obj = {};
           if (formData['program' + i + '_level'])
@@ -443,8 +429,14 @@ exports.processReport = async (req, res) => {
           if (formData['program' + i + '_name'])
             obj.name = formData['program' + i + '_name'];
 
-          if (formData['program' + i + '_beneficiaries'])
+          if (formData['program' + i + '_beneficiaries']){
             obj.beneficiaries = Number(formData['program' + i + '_beneficiaries']);
+            if (obj.level=='pregrado'){
+              beneficiaries_pregrado+= obj.beneficiaries;
+            }else if(obj.level=='posgrado'){
+              beneficiaries_posgrado+= obj.beneficiaries;
+            }
+          }
 
           if (formData['program' + i + '_term'])
             obj.term = formData['program' + i + '_term'];
@@ -506,6 +498,11 @@ exports.processReport = async (req, res) => {
 
           programs.push(obj);
         }
+        report.pregrado_students = beneficiaries_pregrado;
+        report.posgrado_students = beneficiaries_posgrado;
+        report.pregrado_students_economic = beneficiaries_pregrado;
+        report.posgrado_students_economic = beneficiaries_posgrado;
+
         report.programs = programs;
 
         report.updated_at = (new Date()).toUTCString();
