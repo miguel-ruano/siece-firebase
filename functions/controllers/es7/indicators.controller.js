@@ -629,8 +629,10 @@ const variacionAnual = async (req, res, data) => {
               obj[key] = [((results[i][key][0] - results[i - 1][key][0]) / results[i - 1][key][0] * 100).toFixed(2), results[i][key][1]];
             } else if (results[i - 1][key]) {
               obj[key] = [-100, null];
-            } else {
+            } else if (results[i][key]) {
               obj[key] = [100, results[i][key][1]];
+            } else {
+              obj[key] = [0, null];
             }
           }
           variationResults.push(obj);
@@ -1370,8 +1372,10 @@ const variacionCarteraVigente = async (req, res, data) => {
               obj[key] = [((results[i][key][0] - results[i - 1][key][0]) / results[i - 1][key][0] * 100).toFixed(2), results[i][key][1]];
             } else if (results[i - 1][key]) {
               obj[key] = [-100, null];
-            } else {
+            } else if (results[i][key]) {
               obj[key] = [100, results[i][key][1]];
+            } else {
+              obj[key] = [0, null];
             }
           }
           variationResults.push(obj);
@@ -1466,8 +1470,10 @@ const variacionCarteraVencida = async (req, res, data) => {
               obj[key] = [((results[i][key][0] - results[i - 1][key][0]) / results[i - 1][key][0] * 100).toFixed(2), results[i][key][1]];
             } else if (results[i - 1][key]) {
               obj[key] = [-100, null];
-            } else {
+            } else if (results[i][key]) {
               obj[key] = [100, results[i][key][1]];
+            } else {
+              obj[key] = [0, null];
             }
           }
           variationResults.push(obj);
