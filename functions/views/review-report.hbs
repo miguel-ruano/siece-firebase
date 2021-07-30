@@ -225,6 +225,16 @@
                           </div>
                           <div class="checkbox col-xs-12">
                             <label class="col-xs-12 col-md-5">
+                              <input type="checkbox" value="internacional" id="source_internacional" name="sources" disabled>
+                              Créditos internacionales:
+                            </label>
+                            <div class="col-xs-12 col-md-7">
+                              <label for="source_internacional_amount">USD</label>
+                              <input type="number" id="source_internacional_amount" name="source_amounts" min="0" readonly>
+                            </div>
+                          </div>
+                          <div class="checkbox col-xs-12">
+                            <label class="col-xs-12 col-md-5">
                               <input type="checkbox" value="donaciones" id="source_donaciones" name="sources" disabled>
                               Donaciones y filantropía:
                             </label>
@@ -1081,12 +1091,14 @@
         {{/if}}
       {{/if}}
 
-      {{#if report.pregrado_students}}
-        $("#pregrado_students").val("{{report.pregrado_students}}");
+      {{#if report.posgrado_students}}
+        console.log("hola");
+        $("#posgrado_students").val("{{report.posgrado_students}}");
       {{/if}}
 
-      {{#if report.posgrado_students}}
-        $("#posgrado_students").val("{{report.posgrado_students}}");
+      {{#if report.pregrado_students}}
+        console.log("hola");
+        $("#pregrado_students").val("{{report.pregrado_students}}");
       {{/if}}
 
       {{#if report.pregrado_male_students}}

@@ -173,11 +173,11 @@ const porcentajeGraduados = async (req, res, data) => {
             // console.log(indicatorValue);
             indicatorValue = indicatorValue.toFixed(2);
             if (userCache[reports[i].user_id]) {
-              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, total_graduate, total_beneficiaries];
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, total_beneficiaries];
             } else {
               const userRecord = await admin.auth().getUser(reports[i].user_id);
               userCache[reports[i].user_id] = userRecord.displayName;
-              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, total_graduate, total_beneficiaries];
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, total_beneficiaries];
             }
           }
         }
@@ -732,7 +732,7 @@ const asignacionLugar = async (req, res, data) => {
           if (place === 'todos') {
             let paisIndicator = pais_credits / total_credits * 100;
             let exteriorIndicator = exterior_credits / total_credits * 100;
-            if (paisIndicator && exteriorIndicator) {
+            if (!isNaN(paisIndicator) && !isNaN(exteriorIndicator)) {
               paisIndicator = paisIndicator.toFixed(2);
               exteriorIndicator = exteriorIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
@@ -773,6 +773,9 @@ const asignacionLugar = async (req, res, data) => {
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'percentage';
         data.first_indicator_label = 'País';
+        if (place == 'exterior'){
+          data.first_indicator_label = 'Exterior';
+        }
         data.place = place;
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
@@ -827,52 +830,52 @@ const asignacionNivel = async (req, res, data) => {
 
               if (program.credit_pais) {
                 if (program.credit_pais.new) {
-                  total_credits += Number(program.credit_pais.new);
+                  total_credits += !isNaN(Number(program.credit_pais.new)) ? Number(program.credit_pais.new) : 0;
                   if (program.level === level)
-                    level_credits += Number(program.credit_pais.new);
+                    level_credits += !isNaN(Number(program.credit_pais.new)) ? Number(program.credit_pais.new) : 0;
                   if (level === 'todos') {
                     if (program.level === 'pregrado')
-                      pregrado_credits += Number(program.credit_pais.new);
+                      pregrado_credits += !isNaN(Number(program.credit_pais.new)) ? Number(program.credit_pais.new) : 0;
                     else
-                      posgrado_credits += Number(program.credit_pais.new);
+                      posgrado_credits += !isNaN(Number(program.credit_pais.new)) ? Number(program.credit_pais.new) : 0;
                   }
                 }
 
                 if (program.credit_pais.old) {
-                  total_credits += Number(program.credit_pais.old);
+                  total_credits += !isNaN(Number(program.credit_pais.old)) ? Number(program.credit_pais.old) : 0;
                   if (program.level === level)
-                    level_credits += Number(program.credit_pais.old);
+                    level_credits += !isNaN(Number(program.credit_pais.old)) ? Number(program.credit_pais.old) : 0;
                   if (level === 'todos') {
                     if (program.level === 'pregrado')
-                      pregrado_credits += Number(program.credit_pais.old);
+                      pregrado_credits += !isNaN(Number(program.credit_pais.old)) ? Number(program.credit_pais.old) : 0;
                     else
-                      posgrado_credits += Number(program.credit_pais.old);
+                      posgrado_credits += !isNaN(Number(program.credit_pais.old)) ? Number(program.credit_pais.old) : 0;
                   }
                 }
               }
 
               if (program.credit_exterior) {
                 if (program.credit_exterior.new) {
-                  total_credits += Number(program.credit_exterior.new);
+                  total_credits += !isNaN(Number(program.credit_exterior.new)) ? Number(program.credit_exterior.new) : 0;
                   if (program.level === level)
-                    level_credits += Number(program.credit_exterior.new);
+                    level_credits += !isNaN(Number(program.credit_exterior.new)) ? Number(program.credit_exterior.new) : 0;
                   if (level === 'todos') {
                     if (program.level === 'pregrado')
-                      pregrado_credits += Number(program.credit_exterior.new);
+                      pregrado_credits += !isNaN(Number(program.credit_exterior.new)) ? Number(program.credit_exterior.new) : 0;
                     else
-                      posgrado_credits += Number(program.credit_exterior.new);
+                      posgrado_credits += !isNaN(Number(program.credit_exterior.new)) ? Number(program.credit_exterior.new) : 0;
                   }
                 }
 
                 if (program.credit_exterior.old) {
-                  total_credits += Number(program.credit_exterior.old);
+                  total_credits += !isNaN(Number(program.credit_exterior.old)) ? Number(program.credit_exterior.old) : 0;
                   if (program.level === level)
-                    level_credits += Number(program.credit_exterior.old);
+                    level_credits += !isNaN(Number(program.credit_exterior.old)) ? Number(program.credit_exterior.old) : 0;
                   if (level === 'todos') {
                     if (program.level === 'pregrado')
-                      pregrado_credits += Number(program.credit_exterior.old);
+                      pregrado_credits += !isNaN(Number(program.credit_exterior.old)) ? Number(program.credit_exterior.old) : 0;
                     else
-                      posgrado_credits += Number(program.credit_exterior.old);
+                      posgrado_credits += !isNaN(Number(program.credit_exterior.old)) ? Number(program.credit_exterior.old) : 0;
                   }
                 }
               }
@@ -882,7 +885,7 @@ const asignacionNivel = async (req, res, data) => {
           if (level === 'todos') {
             let pregradoIndicator = pregrado_credits / total_credits * 100;
             let posgradoIndicator = posgrado_credits / total_credits * 100;
-            if (pregradoIndicator && posgradoIndicator) {
+            if (!isNaN(pregradoIndicator) && !isNaN(posgradoIndicator)) {
               pregradoIndicator = pregradoIndicator.toFixed(2);
               posgradoIndicator = posgradoIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
@@ -922,6 +925,9 @@ const asignacionNivel = async (req, res, data) => {
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
+        if (level == 'posgrado'){
+          data.first_indicator_label = 'Posgrado'
+        }
         data.level = level;
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
@@ -966,9 +972,13 @@ const asignacionGenero = async (req, res, data) => {
         ];
 
         for (let i = 0; i < reports.length; i++) {
-          let total_credits = reports[i].female_students + reports[i].male_students;
-          let female_credits = reports[i].female_students;
-          let male_credits = reports[i].male_students;
+          let pregrado_female_credits = !isNaN(Number(reports[i].pregrado_female_students)) ? Number(reports[i].pregrado_female_students) : 0;
+          let posgrado_female_credits = !isNaN(Number(reports[i].posgrado_female_students)) ? Number(reports[i].posgrado_female_students) : 0;
+          let pregrado_male_credits = !isNaN(Number(reports[i].pregrado_male_students )) ? Number(reports[i].pregrado_male_students ) : 0;
+          let posgrado_male_credits = !isNaN(Number(reports[i].posgrado_male_students)) ? Number(reports[i].posgrado_male_students) : 0;
+          let female_credits = pregrado_female_credits + posgrado_female_credits;
+          let male_credits = pregrado_male_credits + posgrado_male_credits;
+          let total_credits = female_credits + male_credits;
           let indicatorValue;
           let femaleIndicator;
           let maleIndicator;
@@ -984,7 +994,7 @@ const asignacionGenero = async (req, res, data) => {
           if (sex === 'todos') {
             let femaleIndicator = female_credits / total_credits * 100;
             let maleIndicator = male_credits / total_credits * 100;
-            if (femaleIndicator && maleIndicator) {
+            if (!isNaN(femaleIndicator) && !isNaN(maleIndicator)) {
               femaleIndicator = femaleIndicator.toFixed(2);
               maleIndicator = maleIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
@@ -1023,6 +1033,10 @@ const asignacionGenero = async (req, res, data) => {
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
+        if (sex == 'masculino'){
+          data.first_indicator_label = 'Masculino';
+        }
+
         data.sex = sex;
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
@@ -1093,7 +1107,7 @@ const asignacionNuevoLugar = async (req, res, data) => {
           if (place === 'todos') {
             let paisIndicator = new_pais_credits / total_new_credits * 100;
             let exteriorIndicator = new_exterior_credits / total_new_credits * 100;
-            if (paisIndicator && exteriorIndicator) {
+            if (!isNaN(paisIndicator) && !isNaN(exteriorIndicator)) {
               paisIndicator = paisIndicator.toFixed(2);
               exteriorIndicator = exteriorIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
@@ -1138,6 +1152,9 @@ const asignacionNuevoLugar = async (req, res, data) => {
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'percentage';
         data.first_indicator_label = 'País';
+        if (place == 'exterior'){
+          data.first_indicator_label = 'Exterior';
+        }
         data.place = place;
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
@@ -1219,7 +1236,7 @@ const asignacionNuevoNivel = async (req, res, data) => {
           if (level === 'todos') {
             let pregradoIndicator = new_pregrado_credits / total_new_credits * 100;
             let posgradoIndicator = new_posgrado_credits / total_new_credits * 100;
-            if (pregradoIndicator && posgradoIndicator) {
+            if (!isNaN(pregradoIndicator) && !isNaN(posgradoIndicator)) {
               pregradoIndicator = pregradoIndicator.toFixed(2);
               posgradoIndicator = posgradoIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
@@ -1264,6 +1281,9 @@ const asignacionNuevoNivel = async (req, res, data) => {
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
+        if (level == 'posgrado'){
+          data.first_indicator_label = 'Posgrado';
+        }
         data.level = level;
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
