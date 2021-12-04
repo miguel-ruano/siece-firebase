@@ -49,23 +49,23 @@ exports.getIndicator = async (req, res) => {
       return variacionAnual(req, res, data);
     }
     case 'asignacion_lugar': {
-      data.indicator_name = 'Proporción de CE según el lugar de estudios - ' + req.body.place.toUpperCase();
+      data.indicator_name = 'Proporción de CE según el lugar de estudios - ' + getFinancingSource(req.body.place);
       return asignacionLugar(req, res, data);
     }
     case 'asignacion_nivel': {
-      data.indicator_name = 'Proporción de CE según el nivel de estudios - ' + req.body.level.toUpperCase();
+      data.indicator_name = 'Proporción de CE según el nivel de estudios - ' + getFinancingSource(req.body.level);
       return asignacionNivel(req, res, data);
     }
     case 'asignacion_genero': {
-      data.indicator_name = 'Proporción de CE según el género - ' + req.body.sex.toUpperCase();
+      data.indicator_name = 'Proporción de CE según el género - ' + getFinancingSource(req.body.sex);
       return asignacionGenero(req, res, data);
     }
     case 'asignacion_nuevo': {
-      data.indicator_name = 'Proporción anual de CE nuevo según el lugar de estudios - ' + req.body.place.toUpperCase();
+      data.indicator_name = 'Proporción anual de CE nuevo según el lugar de estudios - ' + getFinancingSource(req.body.place);
       return asignacionNuevoLugar(req, res, data);
     }
     case 'asignacion_nuevo_nivel': {
-      data.indicator_name = 'Proporción anual de CE nuevo según el nivel de estudios - ' + req.body.level.toUpperCase();
+      data.indicator_name = 'Proporción anual de CE nuevo según el nivel de estudios - ' + getFinancingSource(req.body.level);
       return asignacionNuevoNivel(req, res, data);
     }
     case 'variacion_cartera_vigente': {
@@ -77,15 +77,15 @@ exports.getIndicator = async (req, res) => {
       return variacionCarteraVencida(req, res, data);
     }
     case 'cartera_vigente_nivel': {
-      data.indicator_name = 'Proporción anual de la cartera vigente según el nivel de estudios - ' + req.body.level.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vigente según el nivel de estudios - ' + getFinancingSource(req.body.level);
       return carteraVigenteNivel(req, res, data);
     }
     case 'cartera_vigente_lugar': {
-      data.indicator_name = 'Proporción anual de la cartera vigente según el lugar de estudios - ' + req.body.place.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vigente según el lugar de estudios - ' + getFinancingSource(req.body.place);
       return carteraVigenteLugar(req, res, data);
     }
     case 'cartera_vigente_genero': {
-      data.indicator_name = 'Proporción anual de la cartera vigente según el género - ' + req.body.sex.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vigente según el género - ' + getFinancingSource(req.body.sex);
       return carteraVigenteGenero(req, res, data);
     }
     case 'cartera_vencida': {
@@ -93,15 +93,15 @@ exports.getIndicator = async (req, res) => {
       return carteraVencida(req, res, data);
     }
     case 'cartera_vencida_nivel': {
-      data.indicator_name = 'Proporción anual de la cartera vencida según el nivel de estudios - ' + req.body.level.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vencida según el nivel de estudios - ' + getFinancingSource(req.body.level);
       return carteraVencidaNivel(req, res, data);
     }
     case 'cartera_vencida_lugar': {
-      data.indicator_name = 'Proporción anual de la cartera vencida según el lugar de estudios - ' + req.body.place.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vencida según el lugar de estudios - ' + getFinancingSource(req.body.place);
       return carteraVencidaLugar(req, res, data);
     }
     case 'cartera_vencida_genero': {
-      data.indicator_name = 'Proporción anual de la cartera vencida según el género - ' + req.body.sex.toUpperCase();
+      data.indicator_name = 'Proporción anual de la cartera vencida según el género - ' + getFinancingSource(req.body.sex);
       return carteraVencidaGenero(req, res, data);
     }
     case 'empleado_beneficiario': {
@@ -2463,6 +2463,7 @@ const tableResults = (chartResults, institutionNames, indicatorsLength) => {
 };
 
 const getFinancingSource = (code) => {
+  console.log('data source',code);
   switch (code) {
     case 'gubernamental': {
       return 'Recursos Gubernamentales';
@@ -2503,8 +2504,15 @@ const getFinancingSource = (code) => {
     case 'otra': {
       return 'Otra';
     }
+    case 'todos': {
+      return 'Total';
+    }
     default: {
-      return 'error'
+      if(!code) { 
+        return 'Error';
+      }
+      const lower = code.toLowerCase();
+      return code.charAt(0).toUpperCase() + lower.slice(1);
     }
   }
 };
