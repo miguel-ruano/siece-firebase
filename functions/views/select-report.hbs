@@ -568,7 +568,11 @@
               {{#each bar_chart_results}}
                 {
                   {{#each this}}
-                    '{{@key}}': '{{this.[0]}}',
+                    {{#if this.[0]}}
+                      '{{@key}}': '{{this.[0]}}',
+                    {{else}}
+                      '{{@key}}': '{{this}}',
+                    {{/if}}
                   {{/each}}
                 },
               {{/each}}
