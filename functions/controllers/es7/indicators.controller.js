@@ -278,6 +278,7 @@ const financiamientoAnual = async (req, res, data) => {
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
 
         data.line_chart_results = results;
+        data.first_indicator_label = 'Promedio';
         data.table_results = tableResults(results, institutionNames, 3); // length of additional columns + indicator
         data.institution_names = underscore.sample(institutionNames, 5);
         data.type = 'money';
@@ -357,6 +358,7 @@ const financiamientoBeneficiario = async (req, res, data) => {
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
 
         data.line_chart_results = results;
+        data.first_indicator_label = 'Promedio';
         data.table_results = tableResults(results, institutionNames, 3);
         data.institution_names = institutionNames;
         data.type = 'money';
@@ -423,6 +425,7 @@ const financiamientoInstitucion = async (req, res, data) => {
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
 
         data.bar_chart_results = results;
+        data.first_indicator_label = 'Promedio';
         data.table_results = tableResults(results, institutionNames, 3);
         data.institution_names = underscore.sample(institutionNames, 10);
         data.type = 'money';
