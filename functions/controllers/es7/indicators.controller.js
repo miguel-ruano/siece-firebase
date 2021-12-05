@@ -187,7 +187,7 @@ const porcentajeGraduados = async (req, res, data) => {
 
         data.line_chart_results = results;
         data.table_results = tableResults(results, institutionNames, 3); // length of additional columns + indicator
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -280,7 +280,7 @@ const financiamientoAnual = async (req, res, data) => {
         data.line_chart_results = results;
         data.first_indicator_label = 'Promedio';
         data.table_results = tableResults(results, institutionNames, 3); // length of additional columns + indicator
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'money';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -427,7 +427,7 @@ const financiamientoInstitucion = async (req, res, data) => {
         data.bar_chart_results = results;
         data.first_indicator_label = 'Promedio';
         data.table_results = tableResults(results, institutionNames, 3);
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'money';
         data.additional_columns = additionalColumns;
         // console.log(data.bar_chart_results, data.table_results);
@@ -537,7 +537,7 @@ const financiamientoFuentes = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = getFinancingSource('gubernamental');
         data.source = source;
@@ -643,7 +643,7 @@ const variacionAnual = async (req, res, data) => {
 
         data.line_chart_results = variationResults;
         data.table_results = tableResults(variationResults, institutionNames, 1);
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -775,7 +775,7 @@ const asignacionLugar = async (req, res, data) => {
         else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         if (place == 'exterior'){
@@ -927,7 +927,7 @@ const asignacionNivel = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         if (level == 'posgrado'){
@@ -1035,7 +1035,7 @@ const asignacionGenero = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
         if (sex == 'masculino'){
@@ -1154,7 +1154,7 @@ const asignacionNuevoLugar = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         if (place == 'exterior'){
@@ -1283,7 +1283,7 @@ const asignacionNuevoNivel = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 10);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         if (level == 'posgrado'){
@@ -1386,7 +1386,7 @@ const variacionCarteraVigente = async (req, res, data) => {
 
         data.line_chart_results = variationResults;
         data.table_results = tableResults(variationResults, institutionNames, 1);
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -1484,7 +1484,7 @@ const variacionCarteraVencida = async (req, res, data) => {
 
         data.line_chart_results = variationResults;
         data.table_results = tableResults(variationResults, institutionNames, 1);
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -1591,7 +1591,7 @@ const carteraVigenteNivel = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         data.level = level;
@@ -1700,7 +1700,7 @@ const carteraVigenteLugar = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         data.place = place;
@@ -1796,7 +1796,7 @@ const carteraVigenteGenero = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
         data.sex = sex;
@@ -1880,7 +1880,7 @@ const carteraVencida = async (req, res, data) => {
 
         data.line_chart_results = results;
         data.table_results = tableResults(results, institutionNames, 2);
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -1987,7 +1987,7 @@ const carteraVencidaNivel = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         data.level = level;
@@ -2096,7 +2096,7 @@ const carteraVencidaLugar = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         data.place = place;
@@ -2192,7 +2192,7 @@ const carteraVencidaGenero = async (req, res, data) => {
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
         data.sex = sex;
@@ -2290,7 +2290,7 @@ const empleadoBeneficiario = async (req, res, data) => {
 
         data.line_chart_results = results;
         data.table_results = tableResults(results, institutionNames, 3);
-        data.institution_names = underscore.sample(institutionNames, 5);
+        data.institution_names = institutionNames;
         data.type = 'number';
         data.additional_columns = additionalColumns;
         // console.log(data.line_chart_results, data.table_results);
@@ -2461,7 +2461,6 @@ const tableResults = (chartResults, institutionNames, indicatorsLength) => {
     }
     tableResults.push(result);
   }
-
   return tableResults;
 };
 

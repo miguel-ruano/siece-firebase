@@ -531,6 +531,14 @@
       document.addEventListener("DOMContentLoaded", () => {
         const colors = ['#e6194b', '#3cb44b', '#008080', '#0082c8', '#f58231', '#911eb4', '#800000', '#f032e6',
           '#aa6e28', '#808000', '#ffd8b1', '#000080'];
+        let institution_names_sorted = [
+            {{#each institution_names}}
+                '{{this}}',
+            {{/each}}
+        ];
+        institution_names_sorted = institution_names_sorted.sort(function(a, b){
+            return a.localeCompare(b);
+        });
         let chart;
         {{#if line_chart_results}}
           chart = new Morris.Line({
@@ -549,16 +557,8 @@
               {{/each}}
             ],
             xkey: 'reported_year',
-            ykeys: [
-              {{#each institution_names}}
-                '{{this}}',
-              {{/each}}
-            ],
-            labels: [
-              {{#each institution_names}}
-                '{{this}}',
-              {{/each}}
-            ]
+            ykeys: institution_names_sorted,
+            labels: institution_names_sorted
           });
         {{/if}}
         {{#if bar_chart_results}}
@@ -578,19 +578,8 @@
               {{/each}}
             ],
             xkey: 'reported_year',
-            ykeys: [
-              {{#each institution_names}}
-                '{{this}}',
-              {{/each}}
-            ],
-            labels: [
-              {{#each institution_names}}
-                '{{this}}',
-              {{/each}}
-            ],
-            barColors: (row, series, type) => {
-              return colors[series.index];
-            }
+            ykeys: institution_names_sorted,
+            labels: institution_names_sorted
           });
         {{/if}}
       });
