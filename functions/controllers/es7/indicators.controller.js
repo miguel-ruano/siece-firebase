@@ -2321,8 +2321,10 @@ const plataformaTecnologica = async (req, res, data) => {
         let users = usersSnapshot.docs.map(doc => doc.data());
         // console.log(reports);
         let results = [];
+        let pie_chart_results = { "Sí" :0, "No": 0 };
         for (let i = 0; i < users.length; i++) {
           if (users[i].name && users[i].has_platform) {
+            pie_chart_results[users[i].has_platform.toLowerCase() == 'si' ? "Sí": "No"]++;
             let result = {
               institution_name: users[i].name,
               indicators: [{reported_year: '¿Cuenta con Plataforma Tecnológica?', values: [users[i].has_platform]}]
@@ -2330,8 +2332,10 @@ const plataformaTecnologica = async (req, res, data) => {
             results.push(result);
           }
         }
-
-        // data.line_chart_results = results;
+        data.pie_chart_results = Object.keys(pie_chart_results).reduce((acc, key) => {
+          acc.push({ label: key, value: pie_chart_results[key]});
+          return acc;
+        },[]);
         data.table_results = results;
         // data.institution_names = ['si', 'no'];
         // data.type = 'percentage';
@@ -2363,8 +2367,10 @@ const regulacion = async (req, res, data) => {
         let users = usersSnapshot.docs.map(doc => doc.data());
         // console.log(reports);
         let results = [];
+        let pie_chart_results = { "Sí" :0, "No": 0 };
         for (let i = 0; i < users.length; i++) {
           if (users[i].name && users[i].regulated) {
+            pie_chart_results[users[i].regulated.toLowerCase() == 'si' ? "Sí": "No"]++;
             let result = {
               institution_name: users[i].name,
               indicators: [{reported_year: '¿Está la ICE regulada?', values: [users[i].regulated, users[i].regulating_entity]}]
@@ -2376,7 +2382,10 @@ const regulacion = async (req, res, data) => {
           { name: 'Entidad Reguladora', format: 'text'}
         ];
 
-        // data.line_chart_results = results;
+        data.pie_chart_results = Object.keys(pie_chart_results).reduce((acc, key) => {
+          acc.push({ label: key, value: pie_chart_results[key]});
+          return acc;
+        },[]);
         data.table_results = results;
         // data.institution_names = ['si', 'no'];
         // data.type = 'percentage';
@@ -2409,8 +2418,10 @@ const calificacion = async (req, res, data) => {
         let users = usersSnapshot.docs.map(doc => doc.data());
         // console.log(reports);
         let results = [];
+        let pie_chart_results = { "Sí" :0, "No": 0 };
         for (let i = 0; i < users.length; i++) {
           if (users[i].name && users[i].credit_rating) {
+            pie_chart_results[users[i].credit_rating.toLowerCase() == 'si' ? "Sí": "No"]++;
             let result = {
               institution_name: users[i].name,
               indicators: [{reported_year: '¿Cuenta la ICE con calificación crediticia?',
@@ -2423,7 +2434,10 @@ const calificacion = async (req, res, data) => {
           { name: 'Agencia Calificadora', format: 'text'}
         ];
 
-        // data.line_chart_results = results;
+        data.pie_chart_results = Object.keys(pie_chart_results).reduce((acc, key) => {
+          acc.push({ label: key, value: pie_chart_results[key]});
+          return acc;
+        },[]);
         data.table_results = results;
         // data.institution_names = ['si', 'no'];
         // data.type = 'percentage';

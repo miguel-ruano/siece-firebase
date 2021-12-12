@@ -529,7 +529,7 @@
 
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", () => {
-        const colors = ['#e6194b', '#3cb44b', '#008080', '#0082c8', '#f58231', '#911eb4', '#800000', '#f032e6',
+        const colors = ['#3cb44b', '#e6194b', '#008080', '#0082c8', '#f58231', '#911eb4', '#800000', '#f032e6',
           '#aa6e28', '#808000', '#ffd8b1', '#000080'];
         let institution_names_sorted = [
             {{#each institution_names}}
@@ -582,6 +582,14 @@
             parseTime: false,
             ykeys: institution_names_sorted,
             labels: institution_names_sorted
+          });
+        {{/if}}
+        {{#if pie_chart_results}}
+          chart = new Morris.Donut({
+            colors: colors,
+            element: 'chart',
+            data: {{#json pie_chart_results}}{{/json}},
+            resize: true
           });
         {{/if}}
       });
