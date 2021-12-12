@@ -766,16 +766,19 @@ const asignacionLugar = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.bar_chart_results = results;
         if (place === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
+          let barChart = barChartResults(results, institutionNames, ['Pais', 'Exterior'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
         }
         else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
+        
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         if (place == 'exterior'){
@@ -919,15 +922,17 @@ const asignacionNivel = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.bar_chart_results = results;
         if (level === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
+          let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         if (level == 'posgrado'){
@@ -1027,15 +1032,17 @@ const asignacionGenero = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.bar_chart_results = results;
         if (sex === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Masculino'];
+          let barChart = barChartResults(results, institutionNames, ['Femenino', 'Masculino'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
         if (sex == 'masculino'){
@@ -1146,15 +1153,17 @@ const asignacionNuevoLugar = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.bar_chart_results = results;
         if (place === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
+          let barChart = barChartResults(results, institutionNames, ['Pais', 'Exterior'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         if (place == 'exterior'){
@@ -1275,15 +1284,17 @@ const asignacionNuevoNivel = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.bar_chart_results = results;
         if (level === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
+          let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         if (level == 'posgrado'){
@@ -1583,15 +1594,18 @@ const carteraVigenteNivel = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.line_chart_results = results;
         if (level === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
+          let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
+          data.line_chart_results = undefined;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Pregrado';
         data.level = level;
@@ -1692,15 +1706,18 @@ const carteraVigenteLugar = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.line_chart_results = results;
         if (place === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
+          let barChart = barChartResults(results, institutionNames, ['País', 'Exterior'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
+          data.line_chart_results = undefined;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'País';
         data.place = place;
@@ -1788,15 +1805,18 @@ const carteraVigenteGenero = async (req, res, data) => {
 
         let institutionNames = [];
         Object.keys(userCache).forEach(key => institutionNames.push(userCache[key]));
-
+        data.institution_names = institutionNames;
         data.line_chart_results = results;
         if (sex === 'todos') {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Masculino'];
+          let barChart = barChartResults(results, institutionNames, ['Femenino', 'Masculino'])
+          data.bar_chart_results = barChart.results;
+          data.institution_names = barChart.institutionNames;
+          data.line_chart_results = undefined;
         } else {
           data.table_results = tableResults(results, institutionNames, 2);
         }
-        data.institution_names = institutionNames;
         data.type = 'percentage';
         data.first_indicator_label = 'Femenino';
         data.sex = sex;
@@ -2476,6 +2496,27 @@ const tableResults = (chartResults, institutionNames, indicatorsLength) => {
     tableResults.push(result);
   }
   return tableResults;
+};
+
+const barChartResults = (chartResults, institutionNames, indicatorsNames) => {
+  let barChartResults = chartResults.map(result => {
+    let resultMap = { reported_year: result.reported_year };
+    for (let institutionName of institutionNames) {
+      let indicators = result[institutionName];
+      if (indicators) {
+        indicatorsNames.forEach((indicatorName, i) => {
+          let institutionNameP = institutionName + ' ' + indicatorName
+          resultMap[institutionNameP] = parseFloat(indicators[i]);
+        });
+      }
+    }
+    return resultMap;
+  })
+  let institutionNamesFinal = institutionNames.reduce((acc, institutionName) => {
+    acc.push(...indicatorsNames.map(name => institutionName + ' ' + name));
+    return acc
+  }, []);
+  return { results: barChartResults, institutionNames: institutionNamesFinal };
 };
 
 const getFinancingSource = (code) => {
