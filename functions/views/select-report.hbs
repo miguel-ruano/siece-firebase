@@ -608,7 +608,7 @@
         {{/if}}
         {{#if pie_chart_results}}
           chart = new Morris.Donut({
-            colors: colors,
+            colors: ['#00FF00', '#FF0000'],
             element: 'chart',
             data: {{#json pie_chart_results}}{{/json}},
             resize: true

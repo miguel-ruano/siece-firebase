@@ -1565,9 +1565,9 @@ const carteraVigenteNivel = async (req, res, data) => {
           if (level === 'todos') {
             let pregradoIndicator = pregrado_portfolio / current_portfolio * 100;
             let posgradoIndicator = posgrado_portfolio / current_portfolio * 100;
-            if (pregradoIndicator && posgradoIndicator) {
-              pregradoIndicator = pregradoIndicator.toFixed(2);
-              posgradoIndicator = posgradoIndicator.toFixed(2);
+            if (pregradoIndicator || posgradoIndicator) {
+              pregradoIndicator = isNaN(pregradoIndicator) ? 0 : pregradoIndicator.toFixed(2);
+              posgradoIndicator = isNaN(posgradoIndicator) ? 0 : posgradoIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [pregradoIndicator, posgradoIndicator, current_portfolio];
               } else {
@@ -1578,16 +1578,14 @@ const carteraVigenteNivel = async (req, res, data) => {
             }
           } else {
             let indicatorValue = level_portfolio / current_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              }
+            // console.log(indicatorValue);
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
             }
           }
         }
@@ -1677,9 +1675,9 @@ const carteraVigenteLugar = async (req, res, data) => {
           if (place === 'todos') {
             let paisIndicator = pais_portfolio / current_portfolio * 100;
             let exteriorIndicator = exterior_portfolio / current_portfolio * 100;
-            if (paisIndicator && exteriorIndicator) {
-              paisIndicator = paisIndicator.toFixed(2);
-              exteriorIndicator = exteriorIndicator.toFixed(2);
+            if (paisIndicator || exteriorIndicator) {
+              paisIndicator = isNaN(paisIndicator) ? 0 : paisIndicator.toFixed(2);
+              exteriorIndicator = isNaN(exteriorIndicator) ? 0 : exteriorIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [paisIndicator, exteriorIndicator, current_portfolio];
               } else {
@@ -1690,16 +1688,13 @@ const carteraVigenteLugar = async (req, res, data) => {
             }
           } else {
             let indicatorValue = place_portfolio / current_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              }
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
             }
           }
         }
@@ -1772,9 +1767,9 @@ const carteraVigenteGenero = async (req, res, data) => {
           if (sex === 'todos') {
             let femaleIndicator = female_portfolio / current_portfolio * 100;
             let maleIndicator = male_portfolio / current_portfolio * 100;
-            if (femaleIndicator && maleIndicator) {
-              femaleIndicator = femaleIndicator.toFixed(2);
-              maleIndicator = maleIndicator.toFixed(2);
+            if (femaleIndicator || maleIndicator) {
+              femaleIndicator = isNaN(femaleIndicator) ? 0 : femaleIndicator.toFixed(2);
+              maleIndicator = isNaN(maleIndicator) ? 0 : maleIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [femaleIndicator, maleIndicator, current_portfolio];
               } else {
@@ -1784,22 +1779,20 @@ const carteraVigenteGenero = async (req, res, data) => {
               }
             }
           } else {
-            let indicatorValue;
+            let indicatorValue =  0;
             if (sex === 'femenino')
               indicatorValue = female_portfolio / current_portfolio * 100;
             else
               indicatorValue = male_portfolio / current_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
-              }
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, current_portfolio];
             }
+            
           }
         }
 
@@ -1970,9 +1963,9 @@ const carteraVencidaNivel = async (req, res, data) => {
           if (level === 'todos') {
             let pregradoIndicator = pregrado_portfolio / pastdue_portfolio * 100;
             let posgradoIndicator = posgrado_portfolio / pastdue_portfolio * 100;
-            if (pregradoIndicator && posgradoIndicator) {
-              pregradoIndicator = pregradoIndicator.toFixed(2);
-              posgradoIndicator = posgradoIndicator.toFixed(2);
+            if (pregradoIndicator || posgradoIndicator) {
+              pregradoIndicator = isNaN(pregradoIndicator) ? 0 : pregradoIndicator.toFixed(2);
+              posgradoIndicator = isNaN(posgradoIndicator) ? 0 : posgradoIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [pregradoIndicator, posgradoIndicator, pastdue_portfolio];
               } else {
@@ -1983,16 +1976,15 @@ const carteraVencidaNivel = async (req, res, data) => {
             }
           } else {
             let indicatorValue = level_portfolio / pastdue_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              }
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            // console.log(indicatorValue);
+            indicatorValue = indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
             }
           }
         }
@@ -2082,9 +2074,9 @@ const carteraVencidaLugar = async (req, res, data) => {
           if (place === 'todos') {
             let paisIndicator = pais_portfolio / pastdue_portfolio * 100;
             let exteriorIndicator = exterior_portfolio / pastdue_portfolio * 100;
-            if (paisIndicator && exteriorIndicator) {
-              paisIndicator = paisIndicator.toFixed(2);
-              exteriorIndicator = exteriorIndicator.toFixed(2);
+            if (paisIndicator || exteriorIndicator) {
+              paisIndicator = isNaN(paisIndicator) ? 0 : paisIndicator.toFixed(2);
+              exteriorIndicator = isNaN(exteriorIndicator) ? 0 : exteriorIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [paisIndicator, exteriorIndicator, pastdue_portfolio];
               } else {
@@ -2095,16 +2087,13 @@ const carteraVencidaLugar = async (req, res, data) => {
             }
           } else {
             let indicatorValue = place_portfolio / pastdue_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              }
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
             }
           }
         }
@@ -2177,9 +2166,9 @@ const carteraVencidaGenero = async (req, res, data) => {
           if (sex === 'todos') {
             let femaleIndicator = female_portfolio / pastdue_portfolio * 100;
             let maleIndicator = male_portfolio / pastdue_portfolio * 100;
-            if (femaleIndicator && maleIndicator) {
-              femaleIndicator = femaleIndicator.toFixed(2);
-              maleIndicator = maleIndicator.toFixed(2);
+            if (!isNaN(femaleIndicator) || !isNaN(maleIndicator)) {
+              femaleIndicator = isNaN(femaleIndicator) ? 0 : femaleIndicator.toFixed(2);
+              maleIndicator = isNaN(maleIndicator) ? 0 : maleIndicator.toFixed(2);
               if (userCache[reports[i].user_id]) {
                 results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [femaleIndicator, maleIndicator, pastdue_portfolio];
               } else {
@@ -2194,16 +2183,13 @@ const carteraVencidaGenero = async (req, res, data) => {
               indicatorValue = female_portfolio / pastdue_portfolio * 100;
             else
               indicatorValue = male_portfolio / pastdue_portfolio * 100;
-            if (indicatorValue) {
-              // console.log(indicatorValue);
-              indicatorValue = indicatorValue.toFixed(2);
-              if (userCache[reports[i].user_id]) {
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              } else {
-                const userRecord = await admin.auth().getUser(reports[i].user_id);
-                userCache[reports[i].user_id] = userRecord.displayName;
-                results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
-              }
+            indicatorValue = isNaN(indicatorValue) ? 0 : indicatorValue.toFixed(2);
+            if (userCache[reports[i].user_id]) {
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
+            } else {
+              const userRecord = await admin.auth().getUser(reports[i].user_id);
+              userCache[reports[i].user_id] = userRecord.displayName;
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pastdue_portfolio];
             }
           }
         }
