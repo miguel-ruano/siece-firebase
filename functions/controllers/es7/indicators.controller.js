@@ -772,6 +772,7 @@ const asignacionLugar = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
           let barChart = barChartResults(results, institutionNames, ['Pais', 'Exterior'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
         }
@@ -928,6 +929,7 @@ const asignacionNivel = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
           let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
         } else {
@@ -1038,6 +1040,7 @@ const asignacionGenero = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Masculino'];
           let barChart = barChartResults(results, institutionNames, ['Femenino', 'Masculino'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
         } else {
@@ -1159,6 +1162,7 @@ const asignacionNuevoLugar = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
           let barChart = barChartResults(results, institutionNames, ['Pais', 'Exterior'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
         } else {
@@ -1290,6 +1294,7 @@ const asignacionNuevoNivel = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
           let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
         } else {
@@ -1598,6 +1603,7 @@ const carteraVigenteNivel = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
           let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;
@@ -1707,6 +1713,7 @@ const carteraVigenteLugar = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
           let barChart = barChartResults(results, institutionNames, ['País', 'Exterior'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;
@@ -1804,6 +1811,7 @@ const carteraVigenteGenero = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Masculino'];
           let barChart = barChartResults(results, institutionNames, ['Femenino', 'Masculino'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;
@@ -1997,6 +2005,7 @@ const carteraVencidaNivel = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Posgrado'];
           let barChart = barChartResults(results, institutionNames, ['Pregrado', 'Posgrado'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;
@@ -2106,6 +2115,7 @@ const carteraVencidaLugar = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Exterior'];
           let barChart = barChartResults(results, institutionNames, ['País', 'Exterior'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;
@@ -2202,6 +2212,7 @@ const carteraVencidaGenero = async (req, res, data) => {
           data.table_results = tableResults(results, institutionNames, 3);
           data.indicator_labels = ['Masculino'];
           let barChart = barChartResults(results, institutionNames, ['Femenino', 'Masculino'])
+          data.color_group = 2;
           data.bar_chart_results = barChart.results;
           data.institution_names = barChart.institutionNames;
           data.line_chart_results = undefined;

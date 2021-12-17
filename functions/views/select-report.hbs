@@ -536,12 +536,24 @@
         }
         return color;
       }
-      function listRandomColors(size){
+      function listRandomColors(size, group = 1){
+        group = group > 1 ? group : 1;
         var colors = [];
         for (var i = 0; i < size; i++) {
-          var color = getRandomColor();
-          if(colors.indexOf(color) === -1){
-            colors.push(color);
+          var ok = false;
+          while(!ok){
+            var color = getRandomColor();
+            if(colors.indexOf(color) === -1){
+              ok = true;
+              if(group > 1 ){
+                for(var j = 0; j < group; j++){
+                  colors.push(color);
+                  i++;
+                }
+              } else {
+                colors.push(color);
+              }
+            }
           }
         }
         return colors;
@@ -552,7 +564,8 @@
                 '{{this}}',
             {{/each}}
         ];
-        const colors = listRandomColors(institution_names_sorted.length);
+        let color_group = {{#if color_group}}{{#json color_group}}{{/json}}{{else}}1{{/if}};
+        const colors = listRandomColors(institution_names_sorted.length, color_group);
         console.log(colors);
         institution_names_sorted = institution_names_sorted.sort(function(a, b){
             return a.localeCompare(b);
@@ -601,6 +614,8 @@
             ],
             xkey: 'reported_year',
             parseTime: false,
+            hideHover: 'auto',
+            stacked: false,
             ykeys: institution_names_sorted,
             labels: institution_names_sorted,
             resize: true
