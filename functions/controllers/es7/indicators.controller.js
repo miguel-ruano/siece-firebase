@@ -156,7 +156,6 @@ const porcentajeGraduados = async (req, res, data) => {
           { name: 'Total Graduados (postgrado)', format: 'percentage'},
           { name: 'Total Beneficiarios', format: 'number'}
         ];
-        console.log(reports);
         for (let i = 0; i < reports.length; i++) {
           let total_beneficiaries = 0;
           let pregrado_graduate = !isNaN(Number(reports[i].pregrado_graduate_percentage)) ? Number(reports[i].pregrado_graduate_percentage) : 0;
@@ -171,7 +170,7 @@ const porcentajeGraduados = async (req, res, data) => {
             }
           }
            
-          let indicatorValue = pregrado_graduate + postgrado_graduate // ((pregrado_graduate + postgrado_graduate) / total_beneficiaries)*100;
+          let indicatorValue = (pregrado_graduate / total_beneficiaries)*100;
           if (indicatorValue) {
             // console.log(indicatorValue);
             indicatorValue = indicatorValue.toFixed(2);
