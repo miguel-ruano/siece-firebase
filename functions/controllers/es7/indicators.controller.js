@@ -152,16 +152,18 @@ const porcentajeGraduados = async (req, res, data) => {
         }
 
         const additionalColumns = [
-          { name: 'Total Beneficiarios', format: 'number'},
-          { name: 'Total Graduados (pregrado)', format: 'number'}
+          { name: 'Total Graduados (pregrado)', format: 'percentage'},
+          { name: 'Total Graduados (postgrado)', format: 'percentage'},
+          { name: 'Total Beneficiarios', format: 'number'}
         ];
-
         for (let i = 0; i < reports.length; i++) {
           let total_beneficiaries = 0;
           let pregrado_graduate = !isNaN(Number(reports[i].pregrado_graduate_percentage)) ? Number(reports[i].pregrado_graduate_percentage) : 0;
+          let postgrado_graduate = !isNaN(Number(reports[i].posgrado_graduate_percentage)) ? Number(reports[i].posgrado_graduate_percentage) : 0;
           if (reports[i].programs && reports[i].programs instanceof Array) {
             for (let j = 0; j < reports[i].programs.length; j++) {
               const program = reports[i].programs[j];
+              //console.log(program);
               if (program.beneficiaries) {
                 total_beneficiaries += !isNaN(Number(program.beneficiaries))? Number(program.beneficiaries) : 0;
               }
@@ -173,11 +175,11 @@ const porcentajeGraduados = async (req, res, data) => {
             // console.log(indicatorValue);
             indicatorValue = indicatorValue.toFixed(2);
             if (userCache[reports[i].user_id]) {
-              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, total_beneficiaries];
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, postgrado_graduate, total_beneficiaries];
             } else {
               const userRecord = await admin.auth().getUser(reports[i].user_id);
               userCache[reports[i].user_id] = userRecord.displayName;
-              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, total_beneficiaries];
+              results[reports[i].reported_year - formData.from_year][userCache[reports[i].user_id]] = [indicatorValue, pregrado_graduate, postgrado_graduate, total_beneficiaries];
             }
           }
         }
