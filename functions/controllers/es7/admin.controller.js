@@ -182,7 +182,7 @@ const getInstitutionName = async (userId) => {
   const querySnapshot = await db.collection('users')
     .where('user_id', '==', userId)
     .get();
-  return querySnapshot.docs[0].data().name;
+  return querySnapshot.docs[0] ? querySnapshot.docs[0].data().name : "---";
 };
 
 const dump = async ()=> {

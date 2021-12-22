@@ -187,9 +187,9 @@
                             <option value="financiamiento_fuentes">Proporción de financiación de CE según fuente de
                               financiamiento por año</option>
                             <option value="variacion_anual">Variación anual de CE</option>
-                            <option value="asignacion_lugar">Propoción de CE según el lugar de estudios</option>
-                            <option value="asignacion_nivel">Propoción de CE según el nivel de estudios</option>
-                            <option value="asignacion_genero">Propoción de CE según el género</option>
+                            <option value="asignacion_lugar">Proporción de CE según el lugar de estudios</option>
+                            <option value="asignacion_nivel">Proporción de CE según el nivel de estudios</option>
+                            <option value="asignacion_genero">Proporción de CE según el género</option>
                             <option value="asignacion_nuevo">Proporción anual de CE nuevo según el lugar de
                               estudios</option>
                             <option value="asignacion_nuevo_nivel">Proporción anual de CE nuevo según el nivel de
@@ -528,14 +528,45 @@
     </script>
 
     <script type="text/javascript">
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      function listRandomColors(size, group = 1){
+        group = group > 1 ? group : 1;
+        var colors = [];
+        for (var i = 0; i < size; i++) {
+          var ok = false;
+          while(!ok){
+            var color = getRandomColor();
+            if(colors.indexOf(color) === -1){
+              ok = true;
+              if(group > 1 ){
+                for(var j = 0; j < group; j++){
+                  colors.push(color);
+                  i++;
+                }
+              } else {
+                colors.push(color);
+              }
+            }
+          }
+        }
+        return colors;
+      }
       document.addEventListener("DOMContentLoaded", () => {
-        const colors = ['#e6194b', '#3cb44b', '#008080', '#0082c8', '#f58231', '#911eb4', '#800000', '#f032e6',
-          '#aa6e28', '#808000', '#ffd8b1', '#000080'];
         let institution_names_sorted = [
             {{#each institution_names}}
                 '{{this}}',
             {{/each}}
         ];
+        let color_group = {{#if color_group}}{{#json color_group}}{{/json}}{{else}}1{{/if}};
+        const colors = listRandomColors(institution_names_sorted.length, color_group);
+        console.log(colors);
         institution_names_sorted = institution_names_sorted.sort(function(a, b){
             return a.localeCompare(b);
         });
@@ -543,6 +574,7 @@
         {{#if line_chart_results}}
           chart = new Morris.Line({
             element: 'chart',
+            lineColors: colors,
             data: [
               {{#each line_chart_results}}
                 {
@@ -559,12 +591,14 @@
             xkey: 'reported_year',
             parseTime: false,
             ykeys: institution_names_sorted,
-            labels: institution_names_sorted
+            labels: institution_names_sorted,
+            resize: true
           });
         {{/if}}
         {{#if bar_chart_results}}
           chart = new Morris.Bar({
             element: 'chart',
+            barColors: colors,
             data: [
               {{#each bar_chart_results}}
                 {
@@ -580,8 +614,19 @@
             ],
             xkey: 'reported_year',
             parseTime: false,
+            hideHover: 'auto',
+            stacked: false,
             ykeys: institution_names_sorted,
-            labels: institution_names_sorted
+            labels: institution_names_sorted,
+            resize: true
+          });
+        {{/if}}
+        {{#if pie_chart_results}}
+          chart = new Morris.Donut({
+            colors: ['#00FF00', '#FF0000'],
+            element: 'chart',
+            data: {{#json pie_chart_results}}{{/json}},
+            resize: true
           });
         {{/if}}
       });
