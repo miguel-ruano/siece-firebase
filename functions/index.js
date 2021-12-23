@@ -95,6 +95,10 @@ app.set('view engine', 'hbs');
 //   else
 //     return res.render('user');
 // });
+//const migrator = require('./utils/es7/migratorService');
+//migrator.importUsers('./migration/users-auth.json');
+//migrator.exportAllCollections();
+//migrator.importAllCollections();
 
 routes(app);
 // app.use(firebaseUser.validateFirebaseIdToken);
